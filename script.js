@@ -7,4 +7,4 @@ let period;
 
 alert('GloAcademy!');
 console.log('Сообщение в консоль.');
-console.log('Работаю с Git.');
+console.log('Работаю с Git!');

@@ -19,6 +19,18 @@ for (let i = 0; i < strNum.length; i++) {
     temp = temp * +strNum[i];
 }
 
+
+// reduce вместо цикла for
+let arr = [];
+
+for (let i = 0; i < strNum.length; i++) {
+    arr.push(+strNum[i]);
+}
+
+let reducer = (accumulator, currentValue) => accumulator * currentValue;
+console.log(arr.reduce(reducer));
+// reduce вместо цикла for
+
 let numberPow = temp ** 3;
 numberPow = numberPow + '';
 

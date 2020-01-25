@@ -1,41 +1,25 @@
 /*
-1) Следующим переменным присвоить значения 
-   - money - любое число “Доход за месяц”,
-   - income - строка с дополнительными доходом (например: фриланс), 
-   - addExpenses - строка с перечислением дополнительных расходов через запятую (например: интернет, такси, коммуналка), 
-   - deposit - любое булево значение,
-   - mission - любое число (Какую сумму хотите накопить),
-   - period - число от 1 до 12 (месяцев)
-2) Используя методы и свойства:
-   - Вывести в консоль тип данных значений переменных money, income, deposit;
-   - Вывести в консоль длину строки addExpenses
-   - Вывести в консоль “Период равен (period) месяцев” и “Цель заработать (mission) рублей/долларов/гривен/юани”
-   - Привести строку addExpenses к нижнему регистру и разбить строку на массив, вывести массив в консоль
-   - Объявить переменную budgetDay и присвоить дневной бюджет (доход за месяц / 30)
-   - Вывести в консоль budgetDay
+Необходимо выполнить в отдельном JS файле, подключенному к отдельной HTML странице
+1) Создать переменную num со значением 266219 (тип данных число)
+2) Вывести в консоль произведение (умножение) цифр этого числа
+Например: число 123, при помощи javaScript получить каждое цифру ( 1, 2, 3 ) и перемножить их.
+Правильно использовать цикл или методы перебора.
+3) Полученный результат возвести в степень 3, используя только 1 оператор (Math.pow не подходит)
+4) Вывести на экран первые 2 цифры полученного числа
+5) В отдельном репозитории для усложненных уроков, добавить папку или ветку со вторым уроком в свой репозиторий на GitHub
 */
 
-let money = 2500,
-    income = 'фриланс',
-    addExpenses = 'Тренажерный, Машина, Комуналка, Интернет',
-    deposit = true,
-    mission = 1200,
-    period = 1;
+let num = 266219,
+    result = document.getElementById('result'),
+    strNum = String(num), // получение сроки
+    temp = 1;
 
-console.log(typeof money);
-console.log(typeof income);
-console.log(typeof deposit);
-console.log(addExpenses.length);
+for (let i = 0; i < strNum.length; i++) {
+    
+    temp = temp * +strNum[i];
+}
 
-let strPeriod = `Период равен '${period}' месяцев`;
-let strMission = `Цель заработать '${mission}' рублей/долларов/гривен/юани`
+let numberPow = temp ** 3;
+numberPow = numberPow + '';
 
-console.log(strPeriod);
-console.log(strMission);
-
-let lowExpenses = addExpenses.toLowerCase();
-
-console.log(lowExpenses.split(', '));
-
-let budgetDay = money / 30;
-console.log(budgetDay.toFixed(2));
+result.textContent = numberPow.substring(0, 2);

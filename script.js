@@ -27,7 +27,9 @@ for (let i = 0; i < strNum.length; i++) {
     arr.push(+strNum[i]);
 }
 
-let reducer = (accumulator, currentValue) => accumulator * currentValue;
+let reducer = (accumulator, currentValue) => {
+    return accumulator * currentValue;
+}
 console.log(arr.reduce(reducer));
 // reduce вместо цикла for
 

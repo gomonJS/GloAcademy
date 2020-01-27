@@ -74,7 +74,7 @@ if (!money) {
     amount2 = +prompt('Во сколько это обойдется?'); // получение числа
 
     addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую.');
-    deposit = confirm('Есть ли у вас депозит в банке?'); // ture | false
+    deposit = confirm('Есть ли у вас депозит в банке?'); // true | false
 
     let countAmount = amount1 + amount2;
     money -= +countAmount;

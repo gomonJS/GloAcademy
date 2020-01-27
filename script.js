@@ -57,10 +57,17 @@ let money = 0,
     period = 6;
 
 // количество дней в текущем месяце
-Date.prototype.daysInMonth = function() {
-    return 32 - new Date(this.getFullYear(), this.getMonth(), 32).getDate();
+// Date.prototype.daysInMonth = function() {
+//     return 32 - new Date(this.getFullYear(), this.getMonth(), 32).getDate();
+// };
+// let countDayInMonth = new Date().daysInMonth();
+
+const daysInMonth = function() {
+    const today = new Date();
+    return 32 - new Date(today.getFullYear(), today.getMonth(), 32).getDate();
 };
-let countDayInMonth = new Date().daysInMonth();
+
+let countDayInMonth = daysInMonth();
 
 money = +prompt('Ваш месячный доход?', 0); // получение числа
 

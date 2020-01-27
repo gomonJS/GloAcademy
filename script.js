@@ -79,4 +79,4 @@ console.log(lang === 'ru' ? arrayDaysOfWeek[0] : arrayDaysOfWeek[1]);
 
 namePerson = (namePerson ==='Артем') ? console.log('Директор') :
                 (namePerson === 'Максим') ? console.log('Преподаватель') :
-                (namePerson = '') ? console.log('') : console.log('Студент'); 
+                (namePerson === '') ? console.log('') : console.log('Студент'); 

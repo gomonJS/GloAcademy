@@ -71,21 +71,17 @@ let countDayInMonth = daysInMonth();
 
 money = +prompt('Ваш месячный доход?', 0); // получение числа
 
-if (!money) {
-    money = +prompt('Вы не ввели Ваш месячный доход?', 0);
-} else {
-    expenses1 = prompt('Введите обязательную статью расходов?');
-    amount1 = +prompt('Во сколько это обойдется?'); // получение числа
+expenses1 = prompt('Введите обязательную статью расходов?');
+amount1 = +prompt('Во сколько это обойдется?'); // получение числа
 
-    expenses2 = prompt('Введите обязательную статью расходов?');
-    amount2 = +prompt('Во сколько это обойдется?'); // получение числа
+expenses2 = prompt('Введите обязательную статью расходов?');
+amount2 = +prompt('Во сколько это обойдется?'); // получение числа
 
-    addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую.');
-    deposit = confirm('Есть ли у вас депозит в банке?'); // true | false
+addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую.');
+deposit = confirm('Есть ли у вас депозит в банке?'); // true | false
 
-    let countAmount = amount1 + amount2;
-    money -= +countAmount;
-}
+let countAmount = amount1 + amount2;
+money -= +countAmount;
 
 console.log(typeof money);
 console.log(typeof income);

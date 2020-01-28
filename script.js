@@ -88,8 +88,7 @@ function getAccumulatedMonth() {
 let accumulatedMonth = getAccumulatedMonth();
 
 function getTargetMonth() {
-    let res = Math.round(accumulatedMonth / countDayInMonth);
-    return res;
+    return Math.round(accumulatedMonth / countDayInMonth);
 }
 
 console.log('Cрок достижения цели ' + getTargetMonth() + ' месяцев');

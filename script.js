@@ -1,18 +1,5 @@
 'use strict';
 
-/*
-1) Переписать функцию start циклом do while
-
-2) Добавить проверку что введённые данные являются числом, которые 
-мы получаем на вопрос 'Во сколько это обойдется?’ в функции  getExpensesMonth
-
-3) Если getTargetMonth возвращает нам отрицательное значение, 
-то вместо “Цель будет достигнута” необходимо выводить “Цель не будет достигнута”
-
-4) Проверить, чтобы все работало и не было ошибок в консоли
-
-5) Добавить папку с уроком в свой репозиторий на GitHub
-*/
 
 const isNumber = function(number) {
     return !isNaN( parseFloat(number) ) && isFinite(number);
@@ -25,6 +12,7 @@ let money = 0,
     mission = 320000,
     expenses = [],
     period = 6;
+
 
 // количество дней в текущем месяце
 const daysInMonth = function() {
@@ -39,6 +27,7 @@ const start = function() {
         money = prompt('Ваш месячный доход?', 0);
     } while ( !isNumber(money) );
 };
+
 // начало работа программы
 start();
 
@@ -54,10 +43,8 @@ const showTypeOf = function(data) {
 // console.log(showTypeOf(income));
 // console.log(showTypeOf(deposit));
 
-/*
-2) Добавить проверку что введённые данные являются числом, которые 
-мы получаем на вопрос 'Во сколько это обойдется?’ в функции  getExpensesMonth
-*/
+
+// обязательные расходы
 const getExpensesMonth = function() {
 
     let sum = 0, res = 0;
@@ -68,7 +55,7 @@ const getExpensesMonth = function() {
         do {
             res = prompt('Во сколько это обойдется?'); // получение числа
         } while (!isNumber(res));
-        
+
         sum += +res;
     }
     
@@ -78,8 +65,8 @@ const getExpensesMonth = function() {
 let expensesEmount = getExpensesMonth();
 
 console.log('Ваш месячный доход: ' + money);
-
 console.log('Расходы за месяц: ' + expensesEmount);
+
 
 // вычет расходов от месячного дохода 
 const getAccumulatedMonth = function() {
@@ -89,6 +76,7 @@ const getAccumulatedMonth = function() {
 
 let accumulatedMonth = getAccumulatedMonth();
 
+
 // количество месяцев за которые соберется нужная сумма
 const getTargetMonth = function() {
 
@@ -96,7 +84,7 @@ const getTargetMonth = function() {
 
     if (!isNumber(targetMonth) || targetMonth <= 0) {
 
-        return console.log('Цель не достижима');
+        return console.log('Цель не будет достигнута');
     }
     
     return console.log('Cрок достижения цели ' + targetMonth + ' месяцев');
@@ -105,6 +93,7 @@ const getTargetMonth = function() {
 getTargetMonth();
 
 
+// получение массива расходов
 const expensesConsole = function (expensesList) {
 
     let lowExpenses = expensesList.toLowerCase();
@@ -113,13 +102,12 @@ const expensesConsole = function (expensesList) {
 };
 
 console.log(expensesConsole(addExpenses));
-
 console.log(expenses);
 
 
-// 8) Поправить budgetDay учитывая бюджет на месяц, а не месячный доход. Вывести в консоль  округлив в меньшую сторону 
 let budgetDay = Math.round(accumulatedMonth / countDayInMonth);
 
+// вывод дневного бюджета
 const outputBudgetDay = function (budget) {
 
     if (!isNumber(budget) || budget <= 0) {
@@ -131,15 +119,8 @@ const outputBudgetDay = function (budget) {
 
 console.log(outputBudgetDay(budgetDay));
 
-/*
-9) Написать конструкцию условий (расчеты приведены в рублях)	
-Если budgetDay больше 1200, то “У вас высокий уровень дохода”
-Если budgetDay больше 600 и меньше 1200, то сообщение “У вас средний уровень дохода”
-Если budgetDay меньше 600 то в консоль вывести сообщение “К сожалению у вас уровень дохода ниже среднего”
-Если отрицательное значение то вывести “Что то пошло не так”
-Учесть варианты 0, 600 и 1200
-*/
 
+// информация об уровне дохода
 const getStatusIncome = function () {
 
     if (budgetDay > 0 && budgetDay <= 600) {

@@ -16,7 +16,7 @@
 
 let isNumber = function(number) {
     return !isNaN( parseFloat(number) ) && isFinite(number);
-};
+}; // если число возвращает true
 
 let money = 0,
     income = 'фриланс',

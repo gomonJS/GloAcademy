@@ -36,11 +36,10 @@ let countDayInMonth = daysInMonth();
 
 
 let start = function() {
-    money = prompt('Ваш месячный доход?', 0); // получение числа
 
-    while ( !isNumber(money) ) {
+    do {
         money = prompt('Ваш месячный доход?', 0);
-    }
+    } while ( !isNumber(money) );
 };
 // начало работа программы
 start();
@@ -88,10 +87,16 @@ let accumulatedMonth = getAccumulatedMonth();
 
 // количество месяцев за которые соберется нужная сумма
 let getTargetMonth = function() {
-    return Math.round(mission / accumulatedMonth);
+    let targetMonth = Math.round(mission / accumulatedMonth);
+
+    if (targetMonth < 0) {
+        return console.log('Цель не достижима');
+    }
+    
+    return console.log('Cрок достижения цели ' + targetMonth + ' месяцев');
 };
 
-console.log('Cрок достижения цели ' + getTargetMonth() + ' месяцев');
+getTargetMonth();
 
 let lowExpenses = addExpenses.toLowerCase();
 console.log(lowExpenses.split(', '));

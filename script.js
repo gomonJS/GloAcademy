@@ -24,7 +24,6 @@ let money = 0,
     deposit = true,
     mission = 3200000,
     expenses = [],
-    amount1, amount2,
     period = 6;
 
 // количество дней в текущем месяце

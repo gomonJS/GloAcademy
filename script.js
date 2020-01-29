@@ -50,9 +50,9 @@ let showTypeOf = function(data) {
     return typeof data;
 };
 
-console.log(showTypeOf(money));
-console.log(showTypeOf(income));
-console.log(showTypeOf(deposit));
+// console.log(showTypeOf(money));
+// console.log(showTypeOf(income));
+// console.log(showTypeOf(deposit));
 
 /*
 2) Добавить проверку что введённые данные являются числом, которые 
@@ -91,7 +91,8 @@ let accumulatedMonth = getAccumulatedMonth();
 let getTargetMonth = function() {
     let targetMonth = Math.round(mission / accumulatedMonth);
 
-    if (!isNumber(targetMonth)) {
+    if (!isNumber(targetMonth) || targetMonth <= 0) {
+
         return console.log('Цель не достижима');
     }
     
@@ -108,10 +109,11 @@ console.log(expenses);
 
 // 8) Поправить budgetDay учитывая бюджет на месяц, а не месячный доход. Вывести в консоль  округлив в меньшую сторону 
 let budgetDay = Math.round(accumulatedMonth / countDayInMonth);
-if (isNumber(budgetDay)) {
-    console.log('Бюджет на день: ' + budgetDay);
-} else {
+
+if (!isNumber(budgetDay) || budgetDay <= 0) {
     console.log('Бюджет на день: 0');
+} else {
+    console.log('Бюджет на день: ' + budgetDay);
 }
 
 /*

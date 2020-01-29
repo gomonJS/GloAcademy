@@ -51,7 +51,7 @@ console.log(choiseNumber(arr));
 
 let primeNumber = function (number) {
 
-    let resultArray = [];
+    let res;
 
     next:
     for (let i = 2; i <= number; i++) {
@@ -62,9 +62,10 @@ let primeNumber = function (number) {
                 continue next;
             }
         }
-        resultArray.push(i);
+        res += 'Делители этого числа: 1 и ' + i + '\n';
     }
-    return resultArray;
+
+    return res;
 };
 
 console.log(primeNumber(100));

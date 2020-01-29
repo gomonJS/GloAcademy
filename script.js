@@ -1,68 +1,49 @@
 'use strict';
 
 /*
-1) Объявить функцию getExpensesMonth. Функция возвращает сумму всех обязательных расходов за месяц
+1) Переписать функцию start циклом do while
 
-2) Объявить функцию getAccumulatedMonth. Функция возвращает Накопления за месяц (Доходы минус расходы)
+2) Добавить проверку что введённые данные являются числом, которые 
+мы получаем на вопрос 'Во сколько это обойдется?’ в функции  getExpensesMonth
 
-3) Объявить переменную accumulatedMonth и присвоить ей результат вызова функции getAccumulatedMonth 
+3) Если getTargetMonth возвращает нам отрицательное значение, 
+то вместо “Цель будет достигнута” необходимо выводить “Цель не будет достигнута”
 
-4) Объявить функцию getTargetMonth. Подсчитывает за какой период 
-будет достигнута цель, зная результат месячного накопления (accumulatedMonth) и 
-возвращает результат
+4) Проверить, чтобы все работало и не было ошибок в консоли
 
-5) Удалить из кода переменную budgetMonth
-
-6) budgetDay высчитываем исходя из значения месячного накопления (accumulatedMonth)
-
-7) Почистить консоль логи и добавить недостающие, должны остаться:
-
- - вызовы функции showTypeOf
-
- - Расходы за месяц вызов getExpensesMonth
-
- - Вывод возможных расходов в виде массива (addExpenses)
-
- - Cрок достижения цели в месяцах (результат вызова функции getTargetMonth) 
-
- - Бюджет на день (budgetDay)
-
- - вызов функции getStatusIncome
-
-8) Проверить, чтобы все работало и не было ошибок в консоли
-
-9) Добавить папку с четвертым уроком в свой репозиторий на GitHub
+5) Добавить папку с уроком в свой репозиторий на GitHub
 */
+
+let isNumber = function(number) {
+    return !isNaN( parseFloat(number) ) && isFinite(number);
+};
 
 let money = 0,
     income = 'фриланс',
     addExpenses = '',
     deposit = true,
     mission = 3200000,
-    expenses1, expenses2,
+    expenses = [],
     amount1, amount2,
     period = 6;
 
 // количество дней в текущем месяце
-// Date.prototype.daysInMonth = function() {
-//     return 32 - new Date(this.getFullYear(), this.getMonth(), 32).getDate();
-// };
-// let countDayInMonth = new Date().daysInMonth();
-
 const daysInMonth = function() {
     const today = new Date();
     return 32 - new Date(today.getFullYear(), today.getMonth(), 32).getDate();
 };
-
 let countDayInMonth = daysInMonth();
 
-money = +prompt('Ваш месячный доход?', 0); // получение числа
 
-expenses1 = prompt('Введите обязательную статью расходов?');
-amount1 = +prompt('Во сколько это обойдется?'); // получение числа
+let start = function() {
+    money = prompt('Ваш месячный доход?', 0); // получение числа
 
-expenses2 = prompt('Введите обязательную статью расходов?');
-amount2 = +prompt('Во сколько это обойдется?'); // получение числа
+    while ( !isNumber(money) ) {
+        money = prompt('Ваш месячный доход?', 0);
+    }
+};
+// начало работа программы
+start();
 
 addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую.');
 deposit = confirm('Есть ли у вас депозит в банке?'); // true | false
@@ -75,29 +56,47 @@ console.log(showTypeOf(money));
 console.log(showTypeOf(income));
 console.log(showTypeOf(deposit));
 
-function getExpensesMonth() {
-    return amount1 + amount2;
-}
+/*
+2) Добавить проверку что введённые данные являются числом, которые 
+мы получаем на вопрос 'Во сколько это обойдется?’ в функции  getExpensesMonth
+*/
+let getExpensesMonth = function() {
 
-console.log('Расходы за месяц: ' + getExpensesMonth());
+    let sum = 0;
 
-function getAccumulatedMonth() {
-    return money -= +getExpensesMonth();
-}
+    for (let i = 0; i < 2; i++) {
+        expenses[i] = prompt('Введите обязательную статью расходов?');
+        
+        sum += +prompt('Во сколько это обойдется?'); // получение числа
+    }
+    
+    return sum;
+};
+
+let expensesEmount = getExpensesMonth();
+
+console.log('Ваш месячный доход: ' + money);
+
+console.log('Расходы за месяц: ' + expensesEmount);
+
+// вычет расходов от месячного дохода 
+let getAccumulatedMonth = function() {
+    return money -= expensesEmount;
+};
 
 let accumulatedMonth = getAccumulatedMonth();
 
-function getTargetMonth() {
-    return Math.round(accumulatedMonth / countDayInMonth);
-}
+// количество месяцев за которые соберется нужная сумма
+let getTargetMonth = function() {
+    return Math.round(mission / accumulatedMonth);
+};
 
 console.log('Cрок достижения цели ' + getTargetMonth() + ' месяцев');
 
-// let countAmount = amount1 + amount2;
-// money -= +countAmount;
-
 let lowExpenses = addExpenses.toLowerCase();
 console.log(lowExpenses.split(', '));
+
+console.log(expenses);
 
 
 // 8) Поправить budgetDay учитывая бюджет на месяц, а не месячный доход. Вывести в консоль  округлив в меньшую сторону 

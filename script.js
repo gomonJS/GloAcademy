@@ -14,7 +14,7 @@
 5) Добавить папку с уроком в свой репозиторий на GitHub
 */
 
-let isNumber = function(number) {
+const isNumber = function(number) {
     return !isNaN( parseFloat(number) ) && isFinite(number);
 }; // если число возвращает true
 
@@ -22,7 +22,7 @@ let money = 0,
     income = 'фриланс',
     addExpenses = '',
     deposit = true,
-    mission = 3200000,
+    mission = 320000,
     expenses = [],
     period = 6;
 
@@ -33,7 +33,7 @@ const daysInMonth = function() {
 };
 let countDayInMonth = daysInMonth();
 
-let start = function() {
+const start = function() {
 
     do {
         money = prompt('Ваш месячный доход?', 0);
@@ -45,7 +45,8 @@ start();
 addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую.');
 deposit = confirm('Есть ли у вас депозит в банке?'); // true | false
 
-let showTypeOf = function(data) {
+const showTypeOf = function(data) {
+
     return typeof data;
 };
 
@@ -57,7 +58,7 @@ let showTypeOf = function(data) {
 2) Добавить проверку что введённые данные являются числом, которые 
 мы получаем на вопрос 'Во сколько это обойдется?’ в функции  getExpensesMonth
 */
-let getExpensesMonth = function() {
+const getExpensesMonth = function() {
 
     let sum = 0, res = 0;
 
@@ -80,14 +81,16 @@ console.log('Ваш месячный доход: ' + money);
 console.log('Расходы за месяц: ' + expensesEmount);
 
 // вычет расходов от месячного дохода 
-let getAccumulatedMonth = function() {
+const getAccumulatedMonth = function() {
+
     return money -= expensesEmount;
 };
 
 let accumulatedMonth = getAccumulatedMonth();
 
 // количество месяцев за которые соберется нужная сумма
-let getTargetMonth = function() {
+const getTargetMonth = function() {
+
     let targetMonth = Math.round(mission / accumulatedMonth);
 
     if (!isNumber(targetMonth) || targetMonth <= 0) {
@@ -100,8 +103,15 @@ let getTargetMonth = function() {
 
 getTargetMonth();
 
-let lowExpenses = addExpenses.toLowerCase();
-console.log(lowExpenses.split(', '));
+
+const expensesConsole = function (expensesList) {
+
+    let lowExpenses = expensesList.toLowerCase();
+
+    return lowExpenses.split(', ');
+};
+
+console.log(expensesConsole(addExpenses));
 
 console.log(expenses);
 
@@ -110,6 +120,7 @@ console.log(expenses);
 let budgetDay = Math.round(accumulatedMonth / countDayInMonth);
 
 const outputBudgetDay = function (budget) {
+
     if (!isNumber(budget) || budget <= 0) {
         return 'Бюджет на день: 0';
     } else {
@@ -128,7 +139,8 @@ console.log(outputBudgetDay(budgetDay));
 Учесть варианты 0, 600 и 1200
 */
 
-function getStatusIncome() {
+const getStatusIncome = function () {
+
     if (budgetDay > 0 && budgetDay <= 600) {
         return 'К сожалению у вас уровень дохода ниже среднего.';
     } else if (budgetDay > 600 && budgetDay < 1200) {

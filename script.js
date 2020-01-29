@@ -109,11 +109,15 @@ console.log(expenses);
 // 8) Поправить budgetDay учитывая бюджет на месяц, а не месячный доход. Вывести в консоль  округлив в меньшую сторону 
 let budgetDay = Math.round(accumulatedMonth / countDayInMonth);
 
-if (!isNumber(budgetDay) || budgetDay <= 0) {
-    console.log('Бюджет на день: 0');
-} else {
-    console.log('Бюджет на день: ' + budgetDay);
-}
+const outputBudgetDay = function (budget) {
+    if (!isNumber(budget) || budget <= 0) {
+        return 'Бюджет на день: 0';
+    } else {
+        return 'Бюджет на день: ' + budget;
+    }
+};
+
+console.log(outputBudgetDay(budgetDay));
 
 /*
 9) Написать конструкцию условий (расчеты приведены в рублях)	

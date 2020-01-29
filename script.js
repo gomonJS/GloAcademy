@@ -51,7 +51,7 @@ console.log(choiseNumber(arr));
 
 let primeNumber = function (number) {
 
-    let res;
+    let res = '';
 
     next:
     for (let i = 2; i <= number; i++) {

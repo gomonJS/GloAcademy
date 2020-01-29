@@ -68,6 +68,7 @@ const getExpensesMonth = function() {
         do {
             res = prompt('Во сколько это обойдется?'); // получение числа
         } while (!isNumber(res));
+        
         sum += +res;
     }
     
@@ -150,6 +151,6 @@ const getStatusIncome = function () {
     } else if (budgetDay <= 0) {
         return 'Что то пошло не так.';
     }
-}
+};
 
 console.log(getStatusIncome());

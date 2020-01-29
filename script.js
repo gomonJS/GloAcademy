@@ -34,7 +34,6 @@ const daysInMonth = function() {
 };
 let countDayInMonth = daysInMonth();
 
-
 let start = function() {
 
     do {
@@ -61,12 +60,15 @@ console.log(showTypeOf(deposit));
 */
 let getExpensesMonth = function() {
 
-    let sum = 0;
+    let sum = 0, res = 0;
 
     for (let i = 0; i < 2; i++) {
         expenses[i] = prompt('Введите обязательную статью расходов?');
         
-        sum += +prompt('Во сколько это обойдется?'); // получение числа
+        do {
+            res = prompt('Во сколько это обойдется?'); // получение числа
+        } while (!isNumber(res));
+        sum += +res;
     }
     
     return sum;
@@ -89,7 +91,7 @@ let accumulatedMonth = getAccumulatedMonth();
 let getTargetMonth = function() {
     let targetMonth = Math.round(mission / accumulatedMonth);
 
-    if (targetMonth < 0) {
+    if (!isNumber(targetMonth)) {
         return console.log('Цель не достижима');
     }
     
@@ -106,7 +108,11 @@ console.log(expenses);
 
 // 8) Поправить budgetDay учитывая бюджет на месяц, а не месячный доход. Вывести в консоль  округлив в меньшую сторону 
 let budgetDay = Math.round(accumulatedMonth / countDayInMonth);
-console.log('Бюджет на день: ' + budgetDay);
+if (isNumber(budgetDay)) {
+    console.log('Бюджет на день: ' + budgetDay);
+} else {
+    console.log('Бюджет на день: 0');
+}
 
 /*
 9) Написать конструкцию условий (расчеты приведены в рублях)	
@@ -124,7 +130,7 @@ function getStatusIncome() {
         return 'У вас средний уровень дохода.';
     } else if (budgetDay >= 1200) {
         return 'У вас высокий уровень дохода.';
-    } else if (budgetDay < 0) {
+    } else if (budgetDay <= 0) {
         return 'Что то пошло не так.';
     }
 }

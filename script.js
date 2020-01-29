@@ -53,7 +53,6 @@ let primeNumber = function (number) {
 
     let resultArray = [];
 
-    // как вот это работает?
     next:
     for (let i = 2; i <= number; i++) {
 

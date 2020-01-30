@@ -44,7 +44,7 @@ const randomNumber = function (min = 1, max = 10) {
 const gameRandomNumber = (function () {
 
     let number = randomNumber(1, 100);
-    console.log(number);
+    
     return function bar () {
 
         let userNumber = prompt('Угадай число от 1 до 100');
@@ -65,7 +65,7 @@ const gameRandomNumber = (function () {
                 alert('Вы выиграли!');
             }
         } else {
-            alert('Введите коректные данные');
+            alert('Введите коректные данные!');
             return bar();
         }
     };

@@ -41,36 +41,34 @@ const randomNumber = function (min = 1, max = 10) {
 };
 
 
-const gameRandomNumber = function () {
+const gameRandomNumber = (function () {
 
     let number = randomNumber(1, 100);
-    let userNumber = prompt('Угадай число от 1 до 100');
-
-    if (userNumber === null) {
-        return;
-    }
-    
     console.log(number);
     return function bar () {
-        
-        if (!isNumber(userNumber)) {
-            return;
-        } else if (isNumber(userNumber)) {
 
-            if (parseFloat(userNumber) === number) {
-                alert('Вы выиграли!');
-            } else if (parseFloat(userNumber) < number) {
-                userNumber = prompt('Загаданное число больше');
-                return bar();
+        let userNumber = prompt('Угадай число от 1 до 100');
+
+        if (userNumber === null) {
+            return;
+        }
+        
+        if (isNumber(userNumber)) {
+
+            if (parseFloat(userNumber) < number) {
+                alert('Загаданное число больше');
+                bar();
             } else if (parseFloat(userNumber) > number) {
-                userNumber = prompt('Загаданное число меньше');
-                return bar();
+                alert('Загаданное число меньше');
+                bar();
+            } else {
+                alert('Вы выиграли!');
             }
         } else {
+            alert('Введите коректные данные');
             return bar();
         }
     };
-};
+})();
 
-let out = gameRandomNumber();
-out();
+gameRandomNumber();

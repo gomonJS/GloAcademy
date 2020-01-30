@@ -1,137 +1,76 @@
 'use strict';
 
+/*
+Это задание выполняется отдельно от нашего проекта с бюджетом!
 
-const isNumber = function(number) {
-    return !isNaN( parseFloat(number) ) && isFinite(number);
-}; // если число возвращает true
+Для этого задания создайте отдельный репозиторий.
 
-let money = 0,
-    income = 'фриланс',
-    addExpenses = '',
-    deposit = true,
-    mission = 320000,
-    expenses = [],
-    period = 6;
+Используйте функции alert, confirm, prompt для общения с пользователем.
 
 
-// количество дней в текущем месяце
-const daysInMonth = function() {
-    const today = new Date();
-    return 32 - new Date(today.getFullYear(), today.getMonth(), 32).getDate();
-};
-let countDayInMonth = daysInMonth();
+Написать игровой бот.
 
-const start = function() {
+"Загадывание случайного числа от 1 до 100"
 
-    do {
-        money = prompt('Ваш месячный доход?', 0);
-    } while ( !isNumber(money) );
-};
+Что должна делать программа:
 
-// начало работа программы
-start();
+— спрашивает пользователя: "Угадай число от 1 до 100".
+— если пользовательское число больше, то бот выводит "Загаданное число меньше" и предлагает ввести новый вариант;
+— если пользовательское число меньше, то бот выводит "Загаданное число больше" и предлагает ввести новый вариант;
+— если пользователь ввел не число, то выводит сообщение "Введи число!" и предлагает ввести новый вариант;
+— если пользователь нажимает "Отмена", то игра заканчивается.
 
-addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую.');
-deposit = confirm('Есть ли у вас депозит в банке?'); // true | false
+Программа должны быть выполнена с помощью рекурсии, без единого цикла.
 
-const showTypeOf = function(data) {
+Загаданное число должно храниться «в замыкании»
+*/
 
-    return typeof data;
+
+// проверка на число
+const isNumber = function (number) {
+
+    // если не является числом, вернет false
+    return !isNaN(parseFloat(number)) && isFinite(number);
 };
 
-// console.log(showTypeOf(money));
-// console.log(showTypeOf(income));
-// console.log(showTypeOf(deposit));
+// случайное число
+const randomNumber = function (min = 1, max = 10) {
+
+    let rand = min + Math.random() * (max + 1 - min);
+    return Math.floor(rand);
+};
 
 
-// обязательные расходы
-const getExpensesMonth = function() {
+const gameRandomNumber = function () {
 
-    let sum = 0, res = 0;
+    let number = randomNumber(1, 100);
+    let userNumber = prompt('Угадай число от 1 до 100');
 
-    for (let i = 0; i < 2; i++) {
-        expenses[i] = prompt('Введите обязательную статью расходов?');
+    if (userNumber === null) {
+        return;
+    }
+    
+    console.log(number);
+    return function bar () {
         
-        do {
-            res = prompt('Во сколько это обойдется?'); // получение числа
-        } while (!isNumber(res));
+        if (!isNumber(userNumber)) {
+            return;
+        } else if (isNumber(userNumber)) {
 
-        sum += +res;
-    }
-    
-    return sum;
+            if (parseFloat(userNumber) === number) {
+                alert('Вы выиграли!');
+            } else if (parseFloat(userNumber) < number) {
+                userNumber = prompt('Загаданное число больше');
+                return bar();
+            } else if (parseFloat(userNumber) > number) {
+                userNumber = prompt('Загаданное число меньше');
+                return bar();
+            }
+        } else {
+            return bar();
+        }
+    };
 };
 
-let expensesEmount = getExpensesMonth();
-
-console.log('Ваш месячный доход: ' + money);
-console.log('Расходы за месяц: ' + expensesEmount);
-
-
-// вычет расходов от месячного дохода 
-const getAccumulatedMonth = function() {
-
-    return money -= expensesEmount;
-};
-
-let accumulatedMonth = getAccumulatedMonth();
-
-
-// количество месяцев за которые соберется нужная сумма
-const getTargetMonth = function() {
-
-    let targetMonth = Math.round(mission / accumulatedMonth);
-
-    if (!isNumber(targetMonth) || targetMonth <= 0) {
-
-        return console.log('Цель не будет достигнута');
-    }
-    
-    return console.log('Cрок достижения цели ' + targetMonth + ' месяцев');
-};
-
-getTargetMonth();
-
-
-// получение массива расходов
-const expensesConsole = function (expensesList) {
-
-    let lowExpenses = expensesList.toLowerCase();
-
-    return lowExpenses.split(', ');
-};
-
-console.log(expensesConsole(addExpenses));
-console.log(expenses);
-
-
-let budgetDay = Math.round(accumulatedMonth / countDayInMonth);
-
-// вывод дневного бюджета
-const outputBudgetDay = function (budget) {
-
-    if (!isNumber(budget) || budget <= 0) {
-        return 'Бюджет на день: 0';
-    } else {
-        return 'Бюджет на день: ' + budget;
-    }
-};
-
-console.log(outputBudgetDay(budgetDay));
-
-
-// информация об уровне дохода
-const getStatusIncome = function () {
-
-    if (budgetDay > 0 && budgetDay <= 600) {
-        return 'К сожалению у вас уровень дохода ниже среднего.';
-    } else if (budgetDay > 600 && budgetDay < 1200) {
-        return 'У вас средний уровень дохода.';
-    } else if (budgetDay >= 1200) {
-        return 'У вас высокий уровень дохода.';
-    } else if (budgetDay <= 0) {
-        return 'Что то пошло не так.';
-    }
-};
-
-console.log(getStatusIncome());
+let out = gameRandomNumber();
+out();

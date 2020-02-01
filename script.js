@@ -20,119 +20,101 @@ const start = function() {
 
     do {
         money = prompt('Ваш месячный доход?', 1000);
-    } while ( isNaN(money) || money === '' || money === null );
+    } while ( !isNumber(money) );
 };
 
 start(); // начало работа программы
 
 
-let appData = {
+const appData = {
 
-    budget: money,
-    budgetDay: 0,
-    budgetMonth: 0,
-    expensesMonth: 0,
+    budget: money, // общий доход без вычетов
+    budgetDay: 0, // беджет на 1 день с вычетом обязятельных расходов
+    budgetMonth: 0, // остаток суммы после вычета обязательных расходов
+    expensesMonth: 0, // сумма обязательных расходов
     income: {}, // дополнительные доходы
-    addIncome: [], // перечисление дополнительных доходов
+    addIncome: [], // список дополнительных доходов
     expenses: {}, // расходы
     addExpenses: [], // возможные расходы
     deposit: false,
     mission: 320000,
     period: 6,
     asking: function () {
-        let addExpenses = prompt('Перечислите возможные расходы через запятую.');
-            appData.addExpenses = addExpenses.toLowerCase().split(', '); // []
-            appData.deposit = confirm('Есть ли у вас депозит в банке?'); // true | false
-        
+
+        let addExpenses = prompt('Перечислите возможные расходы через запятую');
+            appData.addExpenses = addExpenses.toLowerCase().slice(',');
+            appData.deposit = confirm('Есть ли у Вас депозит в банке?');
+
         let sum = 0, question;
 
         for (let i = 0; i < 2; i++) {
+            let exp = prompt('Есть ли у Вас дополнительные расходы?');
 
-            let exp = prompt('Введите обязательную статью расходов?');
-            
             do {
-                question = prompt('Во сколько это обойдется?'); // получение числа
-            } while ( isNaN(question) || question === '' || question === null );
-    
-            sum = +question;
+                question = prompt('Во сколько это обойдется?');
+            } while (!isNumber(question));
 
-            appData.expenses[exp] = sum; // расходы
+            sum = +question;
+            appData.expenses[exp] = sum;
         }
     },
-    
-    getExpensesMonth: function() { // обязательные расходы
+
+    getExpensesMonth: function () {
 
         let sum = 0;
 
-        for (let key in appData.expenses) {
-            sum += +appData.expenses[key];
+        for (let item in appData.expenses) {
+            sum += +appData.expenses[item];
         }
 
         appData.expensesMonth = sum;
-        // return sum;
     },
 
-    getBudget: function() { // вычет расходов от месячного дохода
+    getBudget: function () {
 
-        appData.budgetDay = Math.ceil(money / 30);
-        appData.budgetMonth = money - appData.expensesMonth;
-        return money -= appData.expensesMonth;
+        appData.budgetMonth = appData.budget - appData.expensesMonth;
+        appData.budgetDay = Math.ceil(appData.budgetMonth / 30);
     },
 
-    getTargetMonth: function() { // достижение цели
+    getTargetMonth: function () {
 
-        appData.period = appData.mission / appData.budgetMonth;
-        return appData.mission / appData.getBudget();
+        appData.period = Math.floor(appData.mission / appData.budgetMonth);
     },
 
-    getStatusIncome: function () { // информация об уровне дохода
+    getStatusIncome: function () {
 
-        if (appData.budgetDay > 0 && appData.budgetDay <= 600) {
+        let budgetMonth = appData.budgetMonth;
+
+        if (budgetMonth > 0 && budgetMonth <= 600) {
             return 'К сожалению у вас уровень дохода ниже среднего.';
-        } else if (appData.budgetDay > 600 && appData.budgetDay < 1200) {
+        } else if (budgetMonth > 600 && budgetMonth < 1200) {
             return 'У вас средний уровень дохода.';
-        } else if (appData.budgetDay >= 1200) {
+        } else if (budgetMonth >= 1200) {
             return 'У вас высокий уровень дохода.';
-        } else if (appData.budgetDay <= 0) {
+        } else if (budgetMonth <= 0) {
             return 'Что то пошло не так.';
         }
     }
-};
 
+};
 
 appData.asking();
+appData.getExpensesMonth();
+appData.getBudget();
+appData.getTargetMonth();
 
 console.log('Расходы за месяц: ' + appData.expensesMonth);
-console.log('getExpensesMonth' + appData.getExpensesMonth());
 
 if (appData.period > 0) {
-    console.log('Цель будет достигнута за: ' + Math.ceil(appData.period) + ' месяцев');
+    console.log('Цель будет достигнута за: ' + appData.period + ' месяцев');
 } else {
-    console.log('Цель не будет достигнута');
+    console.log('Цель не может быть достигнута!');
 }
-
-// вывод дневного бюджета
-const outputBudgetDay = function (budget) {
-
-    if (!isNumber(budget) || budget <= 0) {
-        return 'Бюджет на день: 0 рублей';
-    } else {
-        return 'Бюджет на день: ' + budget + ' рублей';
-    }
-};
 
 console.log(appData.getStatusIncome());
 
-// console.log('budgetDay: ' + appData.budgetDay);
-// console.log('budgetMonth: ' + appData.budgetMonth);
-// console.log('expensesMonth: ' + appData.expensesMonth);
-// console.log('income: ' + appData.income);
-// console.log('addIncome: ' + appData.addIncome);
-// console.log('expenses: ' + appData.expenses);
-// console.log('addExpenses: ' + appData.addExpenses);
-// console.log('period: ' + appData.period);
-// console.log('mission: ' + appData.mission);
+console.log('Наша программа включает в себя данные:');
 
-// for (let key in appData) {
-//     console.log('Наша программа включает в себя данные: ' + key + ' : ' + appData[key]);
-// }
+for (let key in appData) {
+    console.log('Ключ: ' + key + ', Значение: ' + appData[key]);
+}

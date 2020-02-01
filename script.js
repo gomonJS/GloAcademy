@@ -76,12 +76,13 @@ let appData = {
 
         appData.budgetDay = Math.ceil(money / 30);
         appData.budgetMonth = money - appData.expensesMonth;
-        return money -= appData.expensesMonth;
+        // return money -= appData.expensesMonth;
     },
 
-    getTargetMonth: function() {
+    getTargetMonth: function() { // достижение цели
 
-        return appData.mission / appData.getBudget();
+        return appData.mission / (money - appData.budgetMonth);
+        // return appData.mission / appData.getBudget();
     },
 
     getStatusIncome: function () { // информация об уровне дохода
@@ -122,6 +123,14 @@ const outputBudgetDay = function (budget) {
 
 console.log(appData.getStatusIncome());
 
-for (let key in appData) {
-    console.log('Наша программа включает в себя данные: ' + key + ' : ' + appData[key]);
-}
+console.log('budgetDay: ' + appData.budgetDay);
+console.log('budgetMonth: ' + appData.budgetMonth);
+console.log('expensesMonth: ' + appData.expensesMonth);
+console.log('income: ' + appData.income);
+console.log('addIncome: ' + appData.addIncome);
+console.log('expenses: ' + appData.expenses);
+console.log('addExpenses: ' + appData.addExpenses);
+
+// for (let key in appData) {
+//     console.log('Наша программа включает в себя данные: ' + key + ' : ' + appData[key]);
+// }

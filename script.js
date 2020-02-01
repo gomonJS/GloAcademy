@@ -35,11 +35,18 @@ const authUser = {
     errorAut: '',
     start: function () {
 
-        let askLogin = prompt('Введите свой логин'),
-            askPassword = prompt('Введите пороль');
+        let askLogin, askPassword;
 
-        authUser.login = askLogin;
-        authUser.pass = askPassword;
+        do {
+            askLogin = prompt('Введите свой логин');
+        } while (askLogin === '');
+
+        do {
+            askPassword = prompt('Введите пороль');
+        } while (askPassword === '');
+
+        authUser.login = askLogin.trim();
+        authUser.pass = askPassword.trim();
         
     },
     userDb: function () {

@@ -21,5 +21,3 @@ for (let i = newWeek.length - 1; i >= 0; i--) {
         blockWeek.innerHTML += '<p>' + newWeek[i] + '</p>';
     }
 }
-
-console.log(day);

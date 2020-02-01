@@ -1,23 +1,72 @@
 'use strict';
 
-let week = [
-    'Воскресенье', 'Суббота', 'Пятница', 'Четверг', 'Среда', 'Вторник', 'Понедельник'
+
+const users = [
+    {
+        name: 'Alex',
+        login: 'alex',
+        password: '1234',
+    },
+    {
+        name: 'Den',
+        login: 'den',
+        password: '1234',
+    },
+    {
+        name: 'Sam',
+        login: 'sam',
+        password: '1234',
+    },
+    {
+        name: 'Dog',
+        login: 'dog',
+        password: '1234',
+    }
 ];
 
-let blockWeek = document.getElementById('blockWeek'),
-    day = new Date().getDay();
 
-let newWeek = week;
+const authUser = {
 
-for (let i = newWeek.length - 1; i >= 0; i--) {
+    name: '',
+    login: '',
+    pass: '',
+    success: false,
+    db: users,
+    errorAut: '',
+    start: function () {
 
-    if (day === i) {
-        blockWeek.innerHTML += '<p><strong>' + newWeek[i] + '</strong></p>';
-    } else if (i === 0) {
-        blockWeek.innerHTML += '<p><em>' + newWeek[i] + '</em></p>';
-    } else if (i === 1) {
-        blockWeek.innerHTML += '<p class="AppC"><em>' + newWeek[i] + '</em></p>';
-    } else {
-        blockWeek.innerHTML += '<p>' + newWeek[i] + '</p>';
+        let askLogin = prompt('Введите свой логин'),
+            askPassword = prompt('Введите пороль');
+
+        authUser.login = askLogin;
+        authUser.pass = askPassword;
+        
+    },
+    userDb: function () {
+
+        for (let i = 0; i < authUser.db.length; i++) {
+            for (let key in authUser.db[i]) {
+
+                if (authUser.login === authUser.db[i].login && authUser.pass === authUser.db[i].password) {
+                    authUser.name = authUser.db[i].name;
+                    authUser.success = true;
+                    return;
+                } else {
+                    authUser.errorAut = 'Ошибка авторизации!';
+                }
+            }
+        }
+    },
+    checkup: function () {
+
+        if (authUser.success) {
+            alert('Здравствуйте ' + authUser.name);
+        } else {
+            alert(authUser.errorAut);
+        }
     }
-}
+};
+
+authUser.start();
+authUser.userDb();
+authUser.checkup();

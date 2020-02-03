@@ -37,9 +37,25 @@ const appData = {
     expenses: {}, // расходы
     addExpenses: [], // возможные расходы
     deposit: false,
+    percentDeposit: 0,
+    moneyDeposit: 0,
     mission: 320000,
     period: 6,
     asking: function () {
+
+        if (confirm('Есть ли вас дополнительный заработок?')) {
+
+            let itemIncome, cashIncome;
+            do {
+                itemIncome = prompt('Какой у вас есть дополнительный заработок?', 'Таксую');
+            } while (itemIncome.trim() === '');
+
+            do {
+                cashIncome = prompt('Какую сумму вы на этом зарабатываете?', 10000);
+            } while (!isNumber(cashIncome));
+            
+            appData.income[itemIncome] = cashIncome;
+        }
 
         let addExpenses = prompt('Перечислите возможные расходы через запятую');
             appData.addExpenses = addExpenses.toLowerCase().slice(',');
@@ -94,6 +110,26 @@ const appData = {
         } else if (budgetMonth <= 0) {
             return 'Что то пошло не так.';
         }
+    },
+
+    getInfoDeposit: function () {
+
+        if (appData.deposit) {
+            
+            do {
+                appData.percentDeposit = prompt('Какой годовой процент?', '10');
+            } while (!isNumber(appData.percentDeposit));
+
+            do {
+                appData.moneyDeposit = prompt('Какая сумма заложена?', 10000);
+            } while (!isNumber(appData.moneyDeposit));
+            
+        }
+    }, 
+
+    calcSavedMoney: function () {
+
+        return appData.budgetMonth * appData.period;
     }
 
 };
@@ -102,6 +138,7 @@ appData.asking();
 appData.getExpensesMonth();
 appData.getBudget();
 appData.getTargetMonth();
+appData.getInfoDeposit();
 
 console.log('Расходы за месяц: ' + appData.expensesMonth);
 
@@ -112,6 +149,44 @@ if (appData.period > 0) {
 }
 
 console.log(appData.getStatusIncome());
+
+
+/*
+    2) Возможные расходы (addExpenses) вывести строкой в консоль 
+    каждое слово с большой буквы слова разделены запятой и пробелом
+
+    Пример (Интернет, Такси, Коммунальные расходы)
+*/
+let tempArr = appData.addExpenses.trim().split(','), str = '';
+
+function outUpperCaseStr (str) { // Первая буква в верхнем регистре
+    
+    if (!str) { return; }
+
+    return str[0].toUpperCase() + str.slice(1);
+}
+
+for (let i = 0; i < tempArr.length; i++) {
+
+    tempArr[i] = tempArr[i].trim();
+}
+
+for (let i = 0; i < tempArr.length; i++) {
+    
+    if (i === tempArr.length - 1) {
+        str += outUpperCaseStr(tempArr[i]);
+    } else {
+        str += outUpperCaseStr(tempArr[i]) + ', ';
+    }
+}
+
+console.log(str);
+/*
+    2) Возможные расходы (addExpenses) вывести строкой в консоль 
+    каждое слово с большой буквы слова разделены запятой и пробелом
+
+    Пример (Интернет, Такси, Коммунальные расходы)
+*/
 
 console.log('Наша программа включает в себя данные:');
 

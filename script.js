@@ -64,7 +64,7 @@ const appData = {
 
                 cashIncome = prompt('Какую сумму вы на этом зарабатываете?', 10000);
 
-                flag = ( !isNumber(cashIncome) && notZero(Math.floor(cashIncome)) ) ? true : false;
+                flag = ( !isNumber(cashIncome) ) ? true : false;
                 
             } while ( flag ); // (!isNumber(cashIncome) && notZero(Math.floor(cashIncome)))
             

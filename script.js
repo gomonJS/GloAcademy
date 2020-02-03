@@ -1,10 +1,20 @@
 'use strict';
 
 
-const isNumber = function(number) {
+const isNumber = function (number) {
     return !isNaN( parseFloat(number) ) && isFinite(number);
 }; // если число возвращает true
 
+const notZero = function (number) {
+
+    if (isNumber(number)) {
+        if (+number === 0) { 
+            return false; 
+        } else {
+            return true;
+        }
+    }
+};
 
 const daysInMonth = function() {
     const today = new Date();
@@ -45,14 +55,18 @@ const appData = {
 
         if (confirm('Есть ли вас дополнительный заработок?')) {
 
-            let itemIncome, cashIncome;
+            let itemIncome, cashIncome, flag;
             do {
                 itemIncome = prompt('Какой у вас есть дополнительный заработок?', 'Таксую');
             } while (itemIncome.trim() === '');
 
             do {
+
                 cashIncome = prompt('Какую сумму вы на этом зарабатываете?', 10000);
-            } while (!isNumber(cashIncome));
+
+                flag = ( !isNumber(cashIncome) && notZero(Math.floor(cashIncome)) ) ? true : false;
+                
+            } while ( flag ); // (!isNumber(cashIncome) && notZero(Math.floor(cashIncome)))
             
             appData.income[itemIncome] = cashIncome;
         }
@@ -67,7 +81,7 @@ const appData = {
             let exp = prompt('Есть ли у Вас дополнительные расходы?');
 
             do {
-                question = prompt('Во сколько это обойдется?');
+                question = prompt('Во сколько это обойдется?', 100);
             } while (!isNumber(question));
 
             sum = +question;
@@ -149,7 +163,7 @@ if (appData.period > 0) {
 }
 
 console.log(appData.getStatusIncome());
-
+console.log(notZero('0'));
 
 /*
     2) Возможные расходы (addExpenses) вывести строкой в консоль 

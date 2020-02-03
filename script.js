@@ -1,23 +1,21 @@
 'use strict';
 
 let week = [
-    'Воскресенье', 'Суббота', 'Пятница', 'Четверг', 'Среда', 'Вторник', 'Понедельник'
+    'Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'
 ];
 
 let blockWeek = document.getElementById('blockWeek'),
     day = new Date().getDay();
 
-let newWeek = week;
-
-for (let i = newWeek.length - 1; i >= 0; i--) {
+for (let i = 0; i < week.length; i++) {
 
     if (day === i) {
-        blockWeek.innerHTML += '<p><strong>' + newWeek[i] + '</strong></p>';
+        blockWeek.innerHTML += '<p><strong>' + week[i] + '</strong></p>';
     } else if (i === 0) {
-        blockWeek.innerHTML += '<p><em>' + newWeek[i] + '</em></p>';
-    } else if (i === 1) {
-        blockWeek.innerHTML += '<p class="AppC"><em>' + newWeek[i] + '</em></p>';
+        blockWeek.innerHTML += '<p><em>' + week[i] + '</em></p>';
+    } else if (i === 6) {
+        blockWeek.innerHTML += '<p class="AppC"><em>' + week[i] + '</em></p>';
     } else {
-        blockWeek.innerHTML += '<p>' + newWeek[i] + '</p>';
+        blockWeek.innerHTML += '<p>' + week[i] + '</p>';
     }
 }

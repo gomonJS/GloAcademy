@@ -56,16 +56,14 @@ const appData = {
         if (confirm('Есть ли вас дополнительный заработок?')) {
 
             let itemIncome, cashIncome, flag;
+
             do {
                 itemIncome = prompt('Какой у вас есть дополнительный заработок?', 'Таксую');
             } while (itemIncome.trim() === '');
 
             do {
-
                 cashIncome = prompt('Какую сумму вы на этом зарабатываете?', 10000);
-
-                flag = ( !isNumber(cashIncome) ) ? true : false;
-                
+                flag = ( !isNumber(cashIncome) || !notZero(cashIncome) ) ? true : false;
             } while ( flag ); // (!isNumber(cashIncome) && notZero(Math.floor(cashIncome)))
             
             appData.income[itemIncome] = cashIncome;
@@ -78,11 +76,17 @@ const appData = {
         let sum = 0, question;
 
         for (let i = 0; i < 2; i++) {
-            let exp = prompt('Есть ли у Вас дополнительные расходы?');
+            let flag = true,
+                exp = '';
+
+            do {
+                exp = prompt('Есть ли у Вас дополнительные расходы?');
+            } while (exp === '');
 
             do {
                 question = prompt('Во сколько это обойдется?', 100);
-            } while (!isNumber(question));
+                flag = ( !isNumber(question) || !notZero(question) ) ? true : false;
+            } while ( flag );
 
             sum = +question;
             appData.expenses[exp] = sum;
@@ -129,15 +133,24 @@ const appData = {
     getInfoDeposit: function () {
 
         if (appData.deposit) {
+
+            let flag,
+                percent = 0,
+                depositQuestion = 0;
             
             do {
-                appData.percentDeposit = prompt('Какой годовой процент?', '10');
-            } while (!isNumber(appData.percentDeposit));
+                flag = true;
+                percent = prompt('Какой годовой процент?', '10');
+                flag = ( !isNumber(percent) || !notZero(percent) ) ? true : false;
+            } while ( flag );
 
             do {
-                appData.moneyDeposit = prompt('Какая сумма заложена?', 10000);
-            } while (!isNumber(appData.moneyDeposit));
-            
+                flag = true;
+                depositQuestion = prompt('Какая сумма заложена?', 10000);
+                flag = ( !isNumber(depositQuestion) || !notZero(depositQuestion) ) ? true : false;
+            } while ( flag );
+            appData.percentDeposit = percent;
+            appData.moneyDeposit = depositQuestion;
         }
     }, 
 
@@ -163,7 +176,7 @@ if (appData.period > 0) {
 }
 
 console.log(appData.getStatusIncome());
-console.log(notZero('0'));
+
 
 /*
     2) Возможные расходы (addExpenses) вывести строкой в консоль 

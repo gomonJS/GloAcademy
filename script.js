@@ -6,14 +6,7 @@ const isNumber = function (number) {
 }; // если число возвращает true
 
 const notZero = function (number) {
-
-    if (isNumber(number)) {
-        if (+number === 0) { 
-            return false; 
-        } else {
-            return true;
-        }
-    }
+    return (isNumber(number) && +number !== 0);
 };
 
 const daysInMonth = function() {
@@ -63,8 +56,7 @@ const appData = {
 
             do {
                 cashIncome = prompt('Какую сумму вы на этом зарабатываете?', 10000);
-                flag = ( !isNumber(cashIncome) || !notZero(cashIncome) ) ? true : false;
-            } while ( flag ); // (!isNumber(cashIncome) && notZero(Math.floor(cashIncome)))
+            } while ( !notZero(cashIncome) ); // (!isNumber(cashIncome) && notZero(Math.floor(cashIncome)))
             
             appData.income[itemIncome] = cashIncome;
         }
@@ -76,8 +68,7 @@ const appData = {
         let sum = 0, question;
 
         for (let i = 0; i < 2; i++) {
-            let flag = true,
-                exp = '';
+            let exp = '';
 
             do {
                 exp = prompt('Есть ли у Вас дополнительные расходы?');
@@ -85,8 +76,7 @@ const appData = {
 
             do {
                 question = prompt('Во сколько это обойдется?', 100);
-                flag = ( !isNumber(question) || !notZero(question) ) ? true : false;
-            } while ( flag );
+            } while ( !notZero(question) );
 
             sum = +question;
             appData.expenses[exp] = sum;
@@ -134,21 +124,17 @@ const appData = {
 
         if (appData.deposit) {
 
-            let flag,
-                percent = 0,
+            let percent = 0,
                 depositQuestion = 0;
             
             do {
-                flag = true;
                 percent = prompt('Какой годовой процент?', '10');
-                flag = ( !isNumber(percent) || !notZero(percent) ) ? true : false;
-            } while ( flag );
+            } while ( !notZero(percent) );
 
             do {
-                flag = true;
                 depositQuestion = prompt('Какая сумма заложена?', 10000);
-                flag = ( !isNumber(depositQuestion) || !notZero(depositQuestion) ) ? true : false;
-            } while ( flag );
+            } while ( !notZero(depositQuestion) );
+            
             appData.percentDeposit = percent;
             appData.moneyDeposit = depositQuestion;
         }

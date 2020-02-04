@@ -22,6 +22,7 @@ const userDate = {
 
         userDate.day = date.getDate();
         userDate.dayWeek = date.getDay();
+        userDate.month = date.getMonth();
     }
 };
 
@@ -29,3 +30,4 @@ userDate.checkDate();
 
 console.log(userDate.day);
 console.log(userDate.dayWeek);
+console.log(userDate.month);

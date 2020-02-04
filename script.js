@@ -1,12 +1,19 @@
 'use strict';
 
 
-const isNumber = function (number) {
-    return !isNaN( parseFloat(number) ) && isFinite(number);
-}; // если число возвращает true
+const validateForm = {
 
-const notZero = function (number) {
-    return (isNumber(number) && +number !== 0);
+    isNumber (number) {
+        return !isNaN( parseFloat(number) ) && isFinite(number);
+    }, // если число возвращает true
+    
+    notZero (number) {
+        return (this.isNumber(number) && +number !== 0);
+    },
+
+    emptyString (str) {
+        return str.trim() !== '';
+    }
 };
 
 const daysInMonth = function() {
@@ -23,7 +30,7 @@ const start = function() {
 
     do {
         money = prompt('Ваш месячный доход?', 1000);
-    } while ( !isNumber(money) );
+    } while ( !validateForm.isNumber(money) );
 };
 
 start(); // начало работа программы
@@ -52,11 +59,11 @@ const appData = {
 
             do {
                 itemIncome = prompt('Какой у вас есть дополнительный заработок?', 'Таксую');
-            } while (itemIncome.trim() === '');
+            } while ( !validateForm.emptyString(itemIncome) );
 
             do {
                 cashIncome = prompt('Какую сумму вы на этом зарабатываете?', 10000);
-            } while ( !notZero(cashIncome) ); // (!isNumber(cashIncome) && notZero(Math.floor(cashIncome)))
+            } while ( !validateForm.notZero(cashIncome) ); // (!isNumber(cashIncome) && notZero(Math.floor(cashIncome)))
             
             appData.income[itemIncome] = cashIncome;
         }
@@ -72,11 +79,11 @@ const appData = {
 
             do {
                 exp = prompt('Есть ли у Вас дополнительные расходы?');
-            } while (exp === '');
+            } while ( !validateForm.emptyString(exp) );
 
             do {
                 question = prompt('Во сколько это обойдется?', 100);
-            } while ( !notZero(question) );
+            } while ( !validateForm.notZero(question) );
 
             sum = +question;
             appData.expenses[exp] = sum;
@@ -129,11 +136,11 @@ const appData = {
             
             do {
                 percent = prompt('Какой годовой процент?', '10');
-            } while ( !notZero(percent) );
+            } while ( !validateForm.notZero(percent) );
 
             do {
                 depositQuestion = prompt('Какая сумма заложена?', 10000);
-            } while ( !notZero(depositQuestion) );
+            } while ( !validateForm.notZero(depositQuestion) );
             
             appData.percentDeposit = percent;
             appData.moneyDeposit = depositQuestion;

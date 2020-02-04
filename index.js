@@ -1,8 +1,8 @@
 'use strict';
 
 const startButton = document.getElementById('start'),
-        buttonPlusIncome = document.querySelector('.income').getElementsByTagName('button'),
-        buttonPlusExpenses = document.querySelector('.expenses').getElementsByTagName('button'),
+        buttonPlusIncome = document.getElementsByTagName('button')[0],
+        buttonPlusExpenses = document.getElementsByTagName('button')[1],
         depositCheckbox = document.querySelector('#deposit-check'),
         additionalIncomeItem = document.querySelectorAll('.additional_income-item'),
         expensesTitle = document.querySelector('input.expenses-title'),
@@ -13,3 +13,6 @@ const startButton = document.getElementById('start'),
         incomeAmount = document.querySelector('.income-amount'),
         additionalExpensesItem = document.querySelector('.additional_expenses-item'),
         periodSelect = document.querySelector('.period-select');
+
+console.log(buttonPlusIncome);
+console.log(buttonPlusExpenses);

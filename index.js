@@ -8,7 +8,6 @@ let books = document.querySelectorAll('.books'),
 adv.style.display = 'none';
 body.style.backgroundImage = 'url(./image/adv.jpg)';
 
-console.log(body);
 function replaceHtmlDom(parent, child) {
 
     // удаление всех блоков внутри родителя
@@ -50,7 +49,6 @@ function replaceHtmlDom(parent, child) {
 }
 
 replaceHtmlDom(books, book);
-
 
 let bookNew = document.querySelectorAll('.book');
 

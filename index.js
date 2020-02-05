@@ -76,7 +76,6 @@ listFoor[0].insertBefore(liFoor[4], liFoor[2]);
 let listFive = bookNew[5].getElementsByTagName('ul'),
     liFive = bookNew[5].querySelectorAll('li'),
     addLi = document.createElement('li');
-
 addLi.textContent = 'Глава 8: За пределами ES6';
 listFive[0].appendChild(addLi);
 listFive[0].insertBefore(liFive[9], liFive[10]);

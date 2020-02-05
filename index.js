@@ -2,11 +2,13 @@
 
 let books = document.querySelectorAll('.books'),
     book = document.querySelectorAll('.book'),
-    adv = document.querySelector('.adv');
+    adv = document.querySelector('.adv'),
+    body = document.querySelector('body');
 
 adv.style.display = 'none';
+body.style.backgroundImage = 'url(./image/adv.jpg)';
 
-
+console.log(body);
 function replaceHtmlDom(parent, child) {
 
     // удаление всех блоков внутри родителя

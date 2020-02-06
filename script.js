@@ -46,7 +46,8 @@ let startButton = document.getElementById('start'),
     additionalExpensesItem = document.querySelector('.additional_expenses-item'),
     periodSelect = document.querySelector('.period-select'),
     targetAmount = document.querySelector('.target-amount'),
-    incomeItem = document.querySelectorAll('.income-items');
+    incomeItem = document.querySelectorAll('.income-items'),
+    periodAmount = document.querySelector('.period-amount');
 
 
 const appData = {
@@ -114,15 +115,14 @@ const appData = {
     },
     addPeriodSelect: function() {
 
-        let periodAmount = document.querySelector('.period-amount');
         periodAmount.textContent = periodSelect.value;
     },
     getExpenses: function () {
 
         expensesItems.forEach(function (item) {
 
-            let itemExpenses = item.querySelector('.expenses-title').value,
-                cashExpenses = item.querySelector('.expenses-amount').value;
+            let itemExpenses = item.querySelector('.expenses-title').value.trim(),
+                cashExpenses = item.querySelector('.expenses-amount').value.trim();
             
             if (itemExpenses !== '' && cashExpenses !== '') {
                 appData.expenses[itemExpenses] = cashExpenses;
@@ -225,17 +225,23 @@ const appData = {
 
 };
 
-salaryAmount.addEventListener('input', function() {
 
-    if (salaryAmount.value.trim() !== '') {
-        startButton.removeAttribute("disabled", "disabled");
-        startButton.addEventListener('click', appData.start);
-    } else {
-        startButton.setAttribute("disabled", "disabled");
-    }
-});
+// salaryAmount.addEventListener('input', function() {
 
-startButton.setAttribute("disabled", "disabled");
+//     if (salaryAmount.value.trim() !== '') {
+//         startButton.removeAttribute("disabled", "disabled");
+//         startButton.addEventListener('click', appData.start);
+//     } else {
+//         startButton.setAttribute("disabled", "disabled");
+//     }
+// });
+
+// startButton.setAttribute("disabled", "true");
+
+startButton.addEventListener('click', appData.start);
+
+// startButton.removeAttribute("disabled");
+
 buttonPlusExpenses.addEventListener('click', appData.addExpensesBlock);
 buttonPlusIncome.addEventListener('click', appData.addIncomeBlock);
 periodSelect.addEventListener('input', appData.addPeriodSelect);

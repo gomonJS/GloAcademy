@@ -52,12 +52,6 @@ let startButton = document.getElementById('start'),
     calc = document.querySelector('.calc');
 
 
-// if (salaryAmount.value.trim() === '') {
-//     startButton.setAttribute("disabled", "true");
-// } else {
-//     startButton.removeAttribute("disabled");
-// }
-
 const appData = {
 
     budget: 0, // общий доход без вычетов

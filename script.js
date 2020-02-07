@@ -226,22 +226,15 @@ const appData = {
 };
 
 
-// salaryAmount.addEventListener('input', function() {
+function blockedStart () {
+    
+    startButton.disabled = !salaryAmount.value.trim();
+}
 
-//     if (salaryAmount.value.trim() !== '') {
-//         startButton.removeAttribute("disabled", "disabled");
-//         startButton.addEventListener('click', appData.start);
-//     } else {
-//         startButton.setAttribute("disabled", "disabled");
-//     }
-// });
+blockedStart();
 
-// startButton.setAttribute("disabled", "true");
-
+salaryAmount.addEventListener('input', blockedStart);
 startButton.addEventListener('click', appData.start);
-
-// startButton.removeAttribute("disabled");
-
 buttonPlusExpenses.addEventListener('click', appData.addExpensesBlock);
 buttonPlusIncome.addEventListener('click', appData.addIncomeBlock);
 periodSelect.addEventListener('input', appData.addPeriodSelect);

@@ -47,8 +47,16 @@ let startButton = document.getElementById('start'),
     periodSelect = document.querySelector('.period-select'),
     targetAmount = document.querySelector('.target-amount'),
     incomeItem = document.querySelectorAll('.income-items'),
-    periodAmount = document.querySelector('.period-amount');
+    periodAmount = document.querySelector('.period-amount'),
+    data = document.querySelector('.data'),
+    calc = document.querySelector('.calc');
 
+
+// if (salaryAmount.value.trim() === '') {
+//     startButton.setAttribute("disabled", "true");
+// } else {
+//     startButton.removeAttribute("disabled");
+// }
 
 const appData = {
 
@@ -76,22 +84,54 @@ const appData = {
         appData.getBudget();
 
         appData.showResult();
+        appData.blockedInputData();
+
     },
     showResult: function () {
 
-        budgetMonthValue.value = appData.budgetMonth;
-        budgetDayValue.value = appData.budgetDay;
-        expensesMonthValue.value = appData.expensesMonth;
-        additionalExpensesValue.value = appData.addExpenses.join(', ');
-        additionalIncomeValue.value = appData.addIncome.join(', ');
+        budgetMonthValue.value = this.budgetMonth;
+        budgetDayValue.value = this.budgetDay;
+        expensesMonthValue.value = this.expensesMonth;
+        additionalExpensesValue.value = this.addExpenses.join(', ');
+        additionalIncomeValue.value = this.addIncome.join(', ');
         targetMonthValue.value = Math.ceil(appData.getTargetMonth());
         incomePeriodValue.value = appData.calcSavedMoney();
         
 
-        periodSelect.addEventListener('input', function() {
+        periodSelect.addEventListener('input', function () {
 
             incomePeriodValue.value = +periodSelect.value * appData.calcSavedMoney();
         });
+    },
+    reset: function () {
+
+        let calcBlock = calc.querySelectorAll('input');
+
+        let dataBlock = data.querySelectorAll('input[type=text]');
+        
+        dataBlock.forEach(function (item) {
+            item.removeAttribute('readonly', 'readonly');
+        });
+
+        calcBlock.forEach(function (item) {
+            item.value = '';
+        });
+
+        periodSelect.value = '1';
+        periodAmount.textContent = '1';
+        startButton.style.display = 'block';
+        cancelButton.style.display = 'none';
+    },
+    blockedInputData: function () {
+        
+        let dataBlock = data.querySelectorAll('input[type=text]');
+        
+        dataBlock.forEach(function (item) {
+            item.setAttribute('readonly', 'readonly');
+        });
+
+        startButton.style.display = 'none';
+        cancelButton.style.display = 'block';
     },
     addExpensesBlock: function () {
 
@@ -174,18 +214,18 @@ const appData = {
 
     getBudget: function () {
 
-        appData.budgetMonth = appData.budget + appData.incomeMonth - appData.expensesMonth;
-        appData.budgetDay = Math.ceil(appData.budgetMonth / 30);
+        this.budgetMonth = this.budget + this.incomeMonth - this.expensesMonth;
+        this.budgetDay = Math.ceil(this.budgetMonth / 30);
     },
 
     getTargetMonth: function () {
 
-        return targetAmount.value / appData.budgetMonth;
+        return targetAmount.value / this.budgetMonth;
     },
 
     getStatusIncome: function () {
 
-        let budgetMonth = appData.budgetMonth;
+        let budgetMonth = this.budgetMonth;
 
         if (budgetMonth > 0 && budgetMonth <= 600) {
             return 'К сожалению у вас уровень дохода ниже среднего.';
@@ -220,7 +260,7 @@ const appData = {
 
     calcSavedMoney: function () {
 
-        return appData.budgetMonth * +periodSelect.value;
+        return this.budgetMonth * +periodSelect.value;
     }
 
 };
@@ -239,9 +279,7 @@ const appData = {
 // startButton.setAttribute("disabled", "true");
 
 startButton.addEventListener('click', appData.start);
-
-// startButton.removeAttribute("disabled");
-
+cancelButton.addEventListener('click', appData.reset);
 buttonPlusExpenses.addEventListener('click', appData.addExpensesBlock);
 buttonPlusIncome.addEventListener('click', appData.addIncomeBlock);
 periodSelect.addEventListener('input', appData.addPeriodSelect);

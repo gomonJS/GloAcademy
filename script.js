@@ -266,18 +266,14 @@ const appData = {
 };
 
 
-// salaryAmount.addEventListener('input', function() {
+function blockedStart () {
+    
+    startButton.disabled = !salaryAmount.value.trim();
+}
 
-//     if (salaryAmount.value.trim() !== '') {
-//         startButton.removeAttribute("disabled", "disabled");
-//         startButton.addEventListener('click', appData.start);
-//     } else {
-//         startButton.setAttribute("disabled", "disabled");
-//     }
-// });
+blockedStart();
 
-// startButton.setAttribute("disabled", "true");
-
+salaryAmount.addEventListener('input', blockedStart);
 startButton.addEventListener('click', appData.start);
 cancelButton.addEventListener('click', appData.reset);
 buttonPlusExpenses.addEventListener('click', appData.addExpensesBlock);

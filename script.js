@@ -68,17 +68,17 @@ const appData = {
     moneyDeposit: 0,
     start: function () {
 
-        appData.budget = +salaryAmount.value;
+        this.budget = +salaryAmount.value;
 
-        appData.getExpenses();
-        appData.getIncome();
-        appData.getExpensesMonth();
-        appData.getAddExpenses();
-        appData.getAddIncome();
-        appData.getBudget();
+        this.getExpenses();
+        this.getIncome();
+        this.getExpensesMonth();
+        this.getAddExpenses();
+        this.getAddIncome();
+        this.getBudget();
 
-        appData.showResult();
-        appData.blockedInputData();
+        this.showResult();
+        this.blockedInputData();
 
     },
     showResult: function () {
@@ -88,13 +88,13 @@ const appData = {
         expensesMonthValue.value = this.expensesMonth;
         additionalExpensesValue.value = this.addExpenses.join(', ');
         additionalIncomeValue.value = this.addIncome.join(', ');
-        targetMonthValue.value = Math.ceil(appData.getTargetMonth());
-        incomePeriodValue.value = appData.calcSavedMoney();
+        targetMonthValue.value = Math.ceil(this.getTargetMonth());
+        incomePeriodValue.value = this.calcSavedMoney();
         
 
         periodSelect.addEventListener('input', function () {
 
-            incomePeriodValue.value = +periodSelect.value * appData.calcSavedMoney();
+            incomePeriodValue.value = +periodSelect.value * this.calcSavedMoney();
         });
     },
     reset: function () {
@@ -147,7 +147,7 @@ const appData = {
             buttonPlusIncome.style.display = 'none';
         }
     },
-    addPeriodSelect: function() {
+    addPeriodSelect: function () {
 
         periodAmount.textContent = periodSelect.value;
     },
@@ -159,19 +159,20 @@ const appData = {
                 cashExpenses = item.querySelector('.expenses-amount').value.trim();
             
             if (itemExpenses !== '' && cashExpenses !== '') {
-                appData.expenses[itemExpenses] = cashExpenses;
+                this.expenses[itemExpenses] = cashExpenses;
             }
         });
     },
     getIncome: function () {
 
+        let self = this;
         incomeItem.forEach(function (item) {
 
             let incomeTitle = item.querySelector('.income-title').value.trim(),
                 incomeAmount = item.querySelector('.income-amount').value.trim();
 
             if (incomeTitle !== '' && incomeAmount !== '') {
-                appData.income[incomeTitle] = incomeAmount;
+                self.income[incomeTitle] = incomeAmount;
             }
         });
     },
@@ -182,7 +183,7 @@ const appData = {
         addExpenses.forEach(function (item) {
             item = item.trim();
             if (item !== '') {
-                appData.addExpenses.push(item);
+                this.addExpenses.push(item);
             }
         });
     },
@@ -191,7 +192,7 @@ const appData = {
         additionalIncomeItem.forEach(function (item) {
             let itemValue = item.value.trim();
             if (itemValue !== '') {
-                appData.addIncome.push(itemValue);
+                this.addIncome.push(itemValue);
             }
         });
     },
@@ -199,11 +200,11 @@ const appData = {
 
         let sum = 0;
 
-        for (let item in appData.expenses) {
-            sum += +appData.expenses[item];
+        for (let item in this.expenses) {
+            sum += +this.expenses[item];
         }
 
-        appData.expensesMonth = sum;
+        this.expensesMonth = sum;
     },
 
     getBudget: function () {
@@ -234,7 +235,7 @@ const appData = {
 
     getInfoDeposit: function () {
 
-        if (appData.deposit) {
+        if (this.deposit) {
 
             let percent = 0,
                 depositQuestion = 0;
@@ -247,8 +248,8 @@ const appData = {
                 depositQuestion = prompt('Какая сумма заложена?', 10000);
             } while (!validateForm.notZero(depositQuestion));
 
-            appData.percentDeposit = percent;
-            appData.moneyDeposit = depositQuestion;
+            this.percentDeposit = percent;
+            this.moneyDeposit = depositQuestion;
         }
     },
 

@@ -69,7 +69,7 @@ const appData = {
     start: function () {
 
         this.budget = +salaryAmount.value;
-
+        
         this.getExpenses();
         this.getIncome();
         this.getExpensesMonth();
@@ -91,12 +91,20 @@ const appData = {
         targetMonthValue.value = Math.ceil(this.getTargetMonth());
         incomePeriodValue.value = this.calcSavedMoney();
         
+        let mn = this.calcSavedMoney();
 
         periodSelect.addEventListener('input', function () {
 
-            incomePeriodValue.value = +periodSelect.value * this.calcSavedMoney();
-        });
+            incomePeriodValue.value = +periodSelect.value * mn;
+        }, this);
     },
+    // changePeriod: function () {
+
+    //     periodSelect.addEventListener('input', function () {
+
+    //         incomePeriodValue.value = +periodSelect.value * this.calcSavedMoney().bind(appData);
+    //     }, this);
+    // },
     reset: function () {
 
         let calcBlock = calc.querySelectorAll('input');
@@ -152,7 +160,7 @@ const appData = {
         periodAmount.textContent = periodSelect.value;
     },
     getExpenses: function () {
-
+        
         expensesItems.forEach(function (item) {
 
             let itemExpenses = item.querySelector('.expenses-title').value.trim(),
@@ -161,7 +169,7 @@ const appData = {
             if (itemExpenses !== '' && cashExpenses !== '') {
                 this.expenses[itemExpenses] = cashExpenses;
             }
-        });
+        }, this);
     },
     getIncome: function () {
 
@@ -185,7 +193,7 @@ const appData = {
             if (item !== '') {
                 this.addExpenses.push(item);
             }
-        });
+        }, this);
     },
     getAddIncome: function () {
 
@@ -194,7 +202,7 @@ const appData = {
             if (itemValue !== '') {
                 this.addIncome.push(itemValue);
             }
-        });
+        }, this);
     },
     getExpensesMonth: function () {
 
@@ -269,8 +277,8 @@ function blockedStart () {
 blockedStart();
 
 salaryAmount.addEventListener('input', blockedStart);
-startButton.addEventListener('click', appData.start);
-cancelButton.addEventListener('click', appData.reset);
-buttonPlusExpenses.addEventListener('click', appData.addExpensesBlock);
-buttonPlusIncome.addEventListener('click', appData.addIncomeBlock);
-periodSelect.addEventListener('input', appData.addPeriodSelect);
+startButton.addEventListener('click', appData.start.bind(appData));
+cancelButton.addEventListener('click', appData.reset.bind(appData));
+buttonPlusExpenses.addEventListener('click', appData.addExpensesBlock.bind(appData));
+buttonPlusIncome.addEventListener('click', appData.addIncomeBlock.bind(appData));
+periodSelect.addEventListener('input', appData.addPeriodSelect.bind(appData));

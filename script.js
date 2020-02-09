@@ -79,7 +79,6 @@ const appData = {
 
         this.showResult();
         this.blockedInputData();
-
     },
     showResult: function () {
 
@@ -91,20 +90,13 @@ const appData = {
         targetMonthValue.value = Math.ceil(this.getTargetMonth());
         incomePeriodValue.value = this.calcSavedMoney();
         
-        let mn = this.calcSavedMoney();
+        let selectRange = this.calcSavedMoney();
 
         periodSelect.addEventListener('input', function () {
 
-            incomePeriodValue.value = +periodSelect.value * mn;
+            incomePeriodValue.value = +periodSelect.value * selectRange;
         }, this);
     },
-    // changePeriod: function () {
-
-    //     periodSelect.addEventListener('input', function () {
-
-    //         incomePeriodValue.value = +periodSelect.value * this.calcSavedMoney().bind(appData);
-    //     }, this);
-    // },
     reset: function () {
 
         let calcBlock = calc.querySelectorAll('input');
@@ -214,18 +206,15 @@ const appData = {
 
         this.expensesMonth = sum;
     },
-
     getBudget: function () {
 
         this.budgetMonth = this.budget + this.incomeMonth - this.expensesMonth;
         this.budgetDay = Math.ceil(this.budgetMonth / 30);
     },
-
     getTargetMonth: function () {
 
         return targetAmount.value / this.budgetMonth;
     },
-
     getStatusIncome: function () {
 
         let budgetMonth = this.budgetMonth;
@@ -240,7 +229,6 @@ const appData = {
             return 'Что то пошло не так.';
         }
     },
-
     getInfoDeposit: function () {
 
         if (this.deposit) {
@@ -260,12 +248,10 @@ const appData = {
             this.moneyDeposit = depositQuestion;
         }
     },
-
     calcSavedMoney: function () {
 
         return this.budgetMonth * +periodSelect.value;
     }
-
 };
 
 

@@ -268,3 +268,4 @@ cancelButton.addEventListener('click', appData.reset.bind(appData));
 buttonPlusExpenses.addEventListener('click', appData.addExpensesBlock.bind(appData));
 buttonPlusIncome.addEventListener('click', appData.addIncomeBlock.bind(appData));
 periodSelect.addEventListener('input', appData.addPeriodSelect.bind(appData));
+

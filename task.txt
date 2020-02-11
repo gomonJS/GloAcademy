@@ -22,3 +22,5 @@
 5) Проверить, чтобы все работало и не было ошибок в консоли
 
 6) Сохранить проект в отдельном репозитории на GitHub
+
+https://www.youtube.com/watch?v=YV3-mqsJ-NY&feature=youtu.be

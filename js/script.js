@@ -7,81 +7,62 @@ let headerInput = document.querySelector('.header-input'),
     completed = document.getElementById('completed');
 
 
-let storage = (localStorage.getItem('arr') === undefined) ? [] : JSON.parse(localStorage.getItem('arr'));
+function outList (value) {
 
+    let li = document.createElement('li'),
+        div = document.createElement('div'),
+        buttonRemove = document.createElement('button'),
+        buttonComplete = document.createElement('button');
 
-const toDoList = {
+    li.className = 'todo-item';
+    div.className = 'todo-buttons';
+    buttonRemove.className = 'todo-remove';
+    buttonComplete.className = 'todo-complete';
+    div.prepend(buttonRemove, buttonComplete);
 
-    storageArray: storage,
-    arrayToDo: [],
+    li.textContent = value;
+    li.append(div);
 
-    read () {
+    return li;
+}
 
-        let memory = localStorage.getItem('arr');
-        memory = JSON.parse(memory);
+function addDo (event) {
 
-        for (let i = 0; i < memory.length; i++) {
-            this.storageArray[i] = memory[i];
-        }
-    },
+    event.preventDefault();
+    
+    if (headerInput.value !== '') {
+        let itemList = outList(headerInput.value);
+        toDo.appendChild(itemList);
 
-    write (event) {
-
-        event.preventDefault();
-
-        let temp = {};
-
-        temp.toDo = headerInput.value;
+        eventDoEvents(itemList, completeDo);
         
-        if (headerInput.value !== '') {
-            let i = this.storageArray.length;
-            this.storageArray[i] = temp;
-        }
-
-        localStorage.setItem('arr', JSON.stringify(this.storageArray));
-
         headerInput.value = '';
+    }
+}
 
-        this.outList();
-    },
+addButton.addEventListener('click', addDo);
 
-    addList () {
+function removeDo () {
+    
+    let listItem = this.parentNode;
+    let li = listItem.parentNode;
+    let ul = li.parentNode;
+    ul.removeChild(li);
+}
 
-        for (let i = 0; i < this.storageArray.length; i++) {
+function completeDo () {
 
-            this.arrayToDo[i] = this.storageArray[i];
-            this.outList();
-        }
-    },
+    let listItem = this.parentNode;
+    let li = listItem.parentNode;
+    let ul = li.parentNode;
+    console.log(ul);
+}
 
-    outList () {
+function eventDoEvents (listItem, checkEvent) {
 
-        let li = document.createElement('li'),
-            div = document.createElement('div'),
-            buttonRemove = document.createElement('button'),
-            buttonComplete = document.createElement('button');
+    let complete = listItem.querySelector('.todo-complete'),
+        remove = listItem.querySelector('.todo-remove');
 
-        li.className = 'todo-item';
-        div.className = 'todo-buttons';
-        buttonRemove.className = 'todo-remove';
-        buttonComplete.className = 'todo-complete';
-        div.prepend(buttonRemove, buttonComplete);
-
-        for (let i = 0; i < this.arrayToDo.length; i++) {
-
-            li.textContent = this.arrayToDo[i].toDo;
-            li.append(div);
-        }
-
-        return toDo.prepend(li);
-    },
-
-    clearHeaderInput () {
-
-        headerInput.value = '';
-    },
-};
-
-addButton.addEventListener('click', toDoList.write.bind(toDoList));
-
-toDoList.addList();
+    complete.addEventListener('click', checkEvent);
+    remove.addEventListener('click', removeDo);
+}

@@ -108,10 +108,14 @@ AppData.prototype.reset = function () {
     let dataBlock = data.querySelectorAll('input[type=text]');
     
     dataBlock.forEach(function (item) {
-        item.removeAttribute('readonly', 'readonly');
+        item.removeAttribute('readonly');
     });
 
     calcBlock.forEach(function (item) {
+        item.value = '';
+    });
+
+    dataBlock.forEach(function (item) {
         item.value = '';
     });
 
@@ -227,7 +231,7 @@ AppData.prototype.getExpensesMonth = function () {
 
 AppData.prototype.getBudget = function () {
 
-    this.budgetMonth = this.budget + this.incomeMonth - this.expensesMonth;
+    this.budgetMonth = this.budget + this.incomeMonth + this.expensesMonth;
     this.budgetDay = Math.ceil(this.budgetMonth / 30);
 };
 

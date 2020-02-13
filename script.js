@@ -277,6 +277,7 @@ AppData.prototype.getInfoDeposit = function () {
 
 AppData.prototype.calcSavedMoney = function () {
 
+    //
     return this.budgetMonth * +periodSelect.value;
 };
 

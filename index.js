@@ -112,6 +112,8 @@ AppData.prototype.getIncome = function () {
 // получение данных из полей - Обязательные расходы
 AppData.prototype.getExpenses = function () {
 
+    expensesItems = document.querySelectorAll('.expenses-items');
+
     expensesItems.forEach(function (item) {
 
         let itemExpenses = item.querySelector('.expenses-title').value.trim(),

@@ -47,6 +47,7 @@ let // Поле result
     targetMonthValue = document.querySelector('.target_month-value'),
     data = document.querySelector('.data'),
     calc = document.querySelector('.calc');
+    
 const btnStart = document.getElementById('start'),
     btnCancel = document.getElementById('cancel');
 

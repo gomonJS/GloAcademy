@@ -219,15 +219,6 @@ AppData.prototype.addExpensesBlock = function () {
 // Вывод результата
 AppData.prototype.showResult = function () {
 
-    // budgetMonthValue.value = (this.calcSavedMoney() !== 0 && this.calcSavedMoney() > 0) ? this.calcSavedMoney() : 0;
-    // budgetDayValue.value = (this.budgetDay !== 0) ? this.budgetDay : 0;
-    // expensesMonthValue.value = (this.expensesMonth !== 0) ? this.expensesMonth : 0;
-    // additionalIncomeValue.value = (this.addIncome.join(', ') !== '') ? this.addIncome.join(', ') : '';
-    // additionalExpensesValue.value = (this.addExpenses.join(', ') !== '') ? this.addExpenses.join(', ') : '';
-    // incomePeriodValue.value = (this.calcSavedMoney() !== 0 && this.calcSavedMoney() > 0) ? this.calcSavedMoney() : 0;
-    // targetMonthValue.value = (Math.ceil(this.targetAmount / this.calcSavedMoney())) ? 
-    // Math.ceil(this.targetAmount / this.calcSavedMoney()) : '0';
-
     budgetMonthValue.value = this.budgetMonth;
     budgetDayValue.value = this.budgetDay;
     expensesMonthValue.value = this.expensesMonth;

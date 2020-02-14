@@ -98,7 +98,7 @@ AppData.prototype.showResult = function () {
     periodSelect.addEventListener('input', function () {
 
         incomePeriodValue.value = +periodSelect.value * selectRange;
-    }, this);
+    });
 };
 
 AppData.prototype.reset = function () {
@@ -231,7 +231,7 @@ AppData.prototype.getExpensesMonth = function () {
 
 AppData.prototype.getBudget = function () {
 
-    this.budgetMonth = this.budget + this.incomeMonth + this.expensesMonth;
+    this.budgetMonth = (this.budget + this.incomeMonth) - this.expensesMonth;
     this.budgetDay = Math.ceil(this.budgetMonth / 30);
 };
 
@@ -281,14 +281,14 @@ AppData.prototype.calcSavedMoney = function () {
     return this.budgetMonth * +periodSelect.value;
 };
 
-AppData.prototype.eventsListener = function () {
+function blockedStart () {
+    
+    startButton.disabled = !salaryAmount.value.trim();
+}
 
-    function blockedStart () {
-    
-        startButton.disabled = !salaryAmount.value.trim();
-    }
-    
-    blockedStart();
+blockedStart();
+
+AppData.prototype.eventsListener = function () {
     
     salaryAmount.addEventListener('input', blockedStart);
     startButton.addEventListener('click', this.start.bind(this));

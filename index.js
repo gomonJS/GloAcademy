@@ -85,7 +85,6 @@ AppData.prototype.start = function () {
     this.showResult();
     this.btnResetVisible();
     this.blockedInputData();
-    console.log(this);
 };
 
 // расчет буджета на 1 день и 1 месяц
@@ -96,6 +95,8 @@ AppData.prototype.getBudget = function () {
 };
 // получение данных из полей - Дополнительный доход
 AppData.prototype.getIncome = function () {
+
+    incomeItems = document.querySelectorAll('.income-items');
 
     incomeItems.forEach(function (item) {
 
@@ -259,6 +260,22 @@ AppData.prototype.resetData = function () {
 
     btnCancel.style.display = 'none';
     btnStart.style.display = 'block';
+
+    incomeItems = document.querySelectorAll('.income-items');
+    for (let i = 1; i < incomeItems.length; i++) {
+        incomeItems[i].remove();
+    }
+
+    btnPlusIncomeAdd.style.display = 'block';
+    btnPlusIncomeAdd.removeAttribute('disabled');
+
+    expensesItems = document.querySelectorAll('.expenses-items');
+    for (let i = 1; i < expensesItems.length; i++) {
+        expensesItems[i].remove();
+    }
+
+    btnPlusExpensesAdd.style.display = 'block';
+    btnPlusExpensesAdd.removeAttribute('disabled');
 
     let calcBlock = calc.querySelectorAll('input');
 

@@ -73,13 +73,13 @@ AppData.prototype.start = function () {
 
     this.budget = +salaryAmount.value;
     
+    this.getBudget(); // расчет буджета на 1 день и 1 месяц
     this.getExpenses(); // получение данных из полей - Обязательные расходы
     this.getIncome(); // получение данных из полей - Дополнительный доход
     this.getAddIncome(); // Возможный доход
     this.getTargetAmount(); // Цель сумма
     this.getAddExpenses(); // Возможные расходы (перечислите через запятую)
     this.getExpensesMonth(); // Сумма расходов за месяц
-    this.getBudget(); // расчет буджета на 1 день и 1 месяц
     this.addIncomeMonth();
 
     this.showResult();
@@ -341,5 +341,5 @@ AppData.prototype.eventListener = function () {
     btnPlusExpensesAdd.addEventListener('click', this.addExpensesBlock.bind(this));
 };
 
-const appData = new AppData();
-appData.eventListener();
+const newData = new AppData();
+newData.eventListener();

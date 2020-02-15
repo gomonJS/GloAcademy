@@ -47,7 +47,6 @@ let // Поле result
     targetMonthValue = document.querySelector('.target_month-value'),
     data = document.querySelector('.data'),
     calc = document.querySelector('.calc');
-    
 const btnStart = document.getElementById('start'),
     btnCancel = document.getElementById('cancel');
 
@@ -80,20 +79,23 @@ AppData.prototype.start = function () {
     this.getTargetAmount(); // Цель сумма
     this.getAddExpenses(); // Возможные расходы (перечислите через запятую)
     this.getExpensesMonth(); // Сумма расходов за месяц
-    this.getBudget(); // расчет буджета на 1 день и 1 месяц
     this.addIncomeMonth();
+    this.getBudget(); // расчет буджета на 1 день и 1 месяц
 
     this.showResult();
     this.btnResetVisible();
     this.blockedInputData();
+
+    console.log(this);
 };
 
 // расчет буджета на 1 день и 1 месяц
 AppData.prototype.getBudget = function () {
 
-    this.budgetMonth = (this.budget + this.incomeMonth) - this.expensesMonth;
+    this.budgetMonth = this.budget + this.incomeMonth - this.expensesMonth;
     this.budgetDay = Math.ceil(this.budgetMonth / 30);
 };
+
 // получение данных из полей - Дополнительный доход
 AppData.prototype.getIncome = function () {
 
@@ -144,7 +146,6 @@ AppData.prototype.addIncomeMonth = function () {
     for (let key in this.income) {
         this.incomeMonth += +this.income[key];
     }
-    console.log(this.incomeMonth);
 };
 
 // Возможные расходы (перечислите через запятую)
@@ -218,14 +219,13 @@ AppData.prototype.addExpensesBlock = function () {
 // Вывод результата
 AppData.prototype.showResult = function () {
 
-    budgetMonthValue.value = (this.calcSavedMoney() !== 0 && this.calcSavedMoney() > 0) ? this.calcSavedMoney() : 0;
-    budgetDayValue.value = (this.budgetDay !== 0) ? this.budgetDay : 0;
-    expensesMonthValue.value = (this.expensesMonth !== 0) ? this.expensesMonth : 0;
-    additionalIncomeValue.value = (this.addIncome.join(', ') !== '') ? this.addIncome.join(', ') : '';
-    additionalExpensesValue.value = (this.addExpenses.join(', ') !== '') ? this.addExpenses.join(', ') : '';
-    incomePeriodValue.value = (this.calcSavedMoney() !== 0 && this.calcSavedMoney() > 0) ? this.calcSavedMoney() : 0;
-    targetMonthValue.value = (Math.ceil(this.targetAmount / this.calcSavedMoney())) ? 
-    Math.ceil(this.targetAmount / this.calcSavedMoney()) : '0';
+    budgetMonthValue.value = this.budgetMonth;
+    budgetDayValue.value = this.budgetDay;
+    expensesMonthValue.value = this.expensesMonth;
+    additionalIncomeValue.value = this.addIncome.join(', ');
+    additionalExpensesValue.value = this.addExpenses.join(', ');
+    incomePeriodValue.value = this.calcSavedMoney();
+    targetMonthValue.value = Math.ceil(this.targetAmount / this.calcSavedMoney());
 
     let selectRange = this.calcSavedMoney();
 
@@ -342,5 +342,5 @@ AppData.prototype.eventListener = function () {
     btnPlusExpensesAdd.addEventListener('click', this.addExpensesBlock.bind(this));
 };
 
-const appData = new AppData();
-appData.eventListener();
+const newData = new AppData();
+newData.eventListener();

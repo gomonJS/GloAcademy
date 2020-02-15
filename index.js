@@ -137,6 +137,7 @@ class AppData {
         additionalIncomeItem.forEach(function (item) {
 
             const itemValue = item.value.trim();
+
             if (itemValue !== '') {
                 this.addIncome.push(itemValue);
             }
@@ -159,6 +160,7 @@ class AppData {
         addExpenses.forEach(function (item) {
 
             item = item.trim();
+
             if (item !== '') {
                 this.addExpenses.push(item);
             }
@@ -198,7 +200,7 @@ class AppData {
     // Дабавление полей дополнительный доход
     addIncomeBlock () {
 
-        let cloneItemIncom = incomeItems[0].cloneNode(true);
+        const cloneItemIncom = incomeItems[0].cloneNode(true);
         incomeItems[0].parentNode.insertBefore(cloneItemIncom, btnPlusIncomeAdd);
         incomeItems = document.querySelectorAll('.income-items');
 
@@ -210,7 +212,7 @@ class AppData {
     // Добавление полей дополнительный расход
     addExpensesBlock () {
 
-        let cloneexpensesItems = expensesItems[0].cloneNode(true);
+        const cloneexpensesItems = expensesItems[0].cloneNode(true);
         expensesItems[0].parentNode.insertBefore(cloneexpensesItems, btnPlusExpensesAdd);
         expensesItems = document.querySelectorAll('.expenses-items');
 
@@ -283,9 +285,9 @@ class AppData {
         btnPlusExpensesAdd.style.display = 'block';
         btnPlusExpensesAdd.removeAttribute('disabled');
 
-        let calcBlock = calc.querySelectorAll('input');
+        const calcBlock = calc.querySelectorAll('input');
 
-        let dataBlock = data.querySelectorAll('input[type=text]');
+        const dataBlock = data.querySelectorAll('input[type=text]');
         
         dataBlock.forEach(function (item) {
             item.removeAttribute('readonly');
@@ -327,7 +329,7 @@ class AppData {
 
     blockedInputData () {
 
-        let dataBlock = data.querySelectorAll('input[type=text]');
+        const dataBlock = data.querySelectorAll('input[type=text]');
     
         dataBlock.forEach(function (item) {
             item.setAttribute('readonly', 'readonly');
@@ -348,5 +350,5 @@ class AppData {
     }
 }
 
-const newData = new AppData();
-newData.eventListener();
+const calcData = new AppData();
+calcData.eventListener();

@@ -47,6 +47,7 @@ let // Поле result
     targetMonthValue = document.querySelector('.target_month-value'),
     data = document.querySelector('.data'),
     calc = document.querySelector('.calc');
+
 const btnStart = document.getElementById('start'),
     btnCancel = document.getElementById('cancel');
 
@@ -85,8 +86,6 @@ AppData.prototype.start = function () {
     this.showResult();
     this.btnResetVisible();
     this.blockedInputData();
-
-    console.log(this);
 };
 
 // расчет буджета на 1 день и 1 месяц
@@ -216,6 +215,17 @@ AppData.prototype.addExpensesBlock = function () {
     }
 };
 
+// Вывод данных по значениею range
+AppData.prototype.setIncomePeriodValue = function () {
+
+    let selectRange = this.calcSavedMoney();
+
+    periodSelect.addEventListener('input', function () {
+
+        incomePeriodValue.value = periodSelect.value * selectRange;
+    }, this);
+};
+
 // Вывод результата
 AppData.prototype.showResult = function () {
 
@@ -224,14 +234,10 @@ AppData.prototype.showResult = function () {
     expensesMonthValue.value = this.expensesMonth;
     additionalIncomeValue.value = this.addIncome.join(', ');
     additionalExpensesValue.value = this.addExpenses.join(', ');
-    incomePeriodValue.value = this.calcSavedMoney();
+    incomePeriodValue.value = (this.budget + this.incomeMonth - this.expensesMonth) * +periodSelect.value;
     targetMonthValue.value = Math.ceil(this.targetAmount / this.calcSavedMoney());
 
-    let selectRange = this.calcSavedMoney();
-
-    periodSelect.addEventListener('input', function () {
-        incomePeriodValue.value = periodSelect.value * selectRange;
-    }, this);
+    this.setIncomePeriodValue();
 };
 
 AppData.prototype.calcSavedMoney = function () {
@@ -285,7 +291,7 @@ AppData.prototype.resetData = function () {
     let dataBlock = data.querySelectorAll('input[type=text]');
     
     dataBlock.forEach(function (item) {
-        item.removeAttribute('readonly');
+        item.removeAttribute('disabled');
     });
 
     calcBlock.forEach(function (item) {
@@ -296,6 +302,7 @@ AppData.prototype.resetData = function () {
         item.value = '';
     });
 
+    incomePeriodValue.value = '';
     periodSelect.value = '1';
     periodAmount.textContent = '1';
 
@@ -320,6 +327,8 @@ AppData.prototype.resetData = function () {
 
     btnStart.disabled = !salaryAmount.value.trim();
     periodSelect.setAttribute('disabled', true);
+
+    this.setIncomePeriodValue();
 };
 
 AppData.prototype.blockedInputData = function () {
@@ -327,7 +336,7 @@ AppData.prototype.blockedInputData = function () {
     let dataBlock = data.querySelectorAll('input[type=text]');
     
     dataBlock.forEach(function (item) {
-        item.setAttribute('readonly', 'readonly');
+        item.setAttribute('disabled', true);
     });
 
     btnPlusIncomeAdd.setAttribute('disabled', true);

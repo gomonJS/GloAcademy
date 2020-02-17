@@ -76,8 +76,8 @@ class AppData {
 
         this.budget = +salaryAmount.value;
     
-        this.getExpenses(); // получение данных из полей - Обязательные расходы
-        this.getIncome(); // получение данных из полей - Дополнительный доход
+        this.getExpInc(); // получение данных из полей - Обязательные расходы
+        // this.getIncome(); // получение данных из полей - Дополнительный доход
         this.getAddIncome(); // Возможный доход
         this.getTargetAmount(); // Цель сумма
         this.getAddExpenses(); // Возможные расходы (перечислите через запятую)
@@ -88,8 +88,6 @@ class AppData {
         this.showResult();
         this.btnResetVisible();
         this.blockedInputData();
-
-        console.log(this);
     }
 
     // расчет буджета на 1 день и 1 месяц
@@ -104,7 +102,7 @@ class AppData {
 
         incomeItems = document.querySelectorAll('.income-items');
 
-        incomeItems.forEach(function (item) {
+        incomeItems.forEach( (item) => {
 
             const itemIncome = item.querySelector('.income-title').value.trim(),
                 amountIncome = item.querySelector('.income-amount').value.trim();
@@ -120,7 +118,7 @@ class AppData {
 
         expensesItems = document.querySelectorAll('.expenses-items');
 
-        expensesItems.forEach(function (item) {
+        expensesItems.forEach( (item) => {
 
             const itemExpenses = item.querySelector('.expenses-title').value.trim(),
                 amountExpenses = item.querySelector('.expenses-amount').value.trim();
@@ -131,10 +129,28 @@ class AppData {
         }, this);
     }
 
+    // получение данных из полей - Обязательные расходы & Дополнительный доход
+    getExpInc () {
+
+        const count = (item) => {
+
+            const startStr = item.className.split('-')[0];
+            const itemTitle = item.querySelector(`.${startStr}-title`).value.trim();
+            const itemAmount = item.querySelector(`.${startStr}-amount`).value.trim();
+
+            if (itemTitle !== '' && itemAmount !== '') {
+                this[startStr][itemTitle] = +itemAmount;
+            }
+        };
+
+        incomeItems.forEach(count);
+        expensesItems.forEach(count);
+    }
+
     // Возможный доход
     getAddIncome () {
 
-        additionalIncomeItem.forEach(function (item) {
+        additionalIncomeItem.forEach( (item) => {
 
             const itemValue = item.value.trim();
 
@@ -157,7 +173,7 @@ class AppData {
 
         const addExpenses = additionalExpensesItem.value.split(',');
 
-        addExpenses.forEach(function (item) {
+        addExpenses.forEach( (item) => {
 
             item = item.trim();
 
@@ -180,7 +196,7 @@ class AppData {
     // Период расчета
     getPeriod () {
 
-        periodSelect.addEventListener('input', function () {
+        periodSelect.addEventListener('input', () => {
             periodAmount.textContent = periodSelect.value;
         }, this);
     }
@@ -221,6 +237,17 @@ class AppData {
         }
     }
 
+    // Вывод данных по значениею range
+    setIncomePeriodValue () {
+
+        let selectRange = this.calcSavedMoney();
+
+        periodSelect.addEventListener('input', () => {
+
+            incomePeriodValue.value = periodSelect.value * selectRange;
+        }, this);
+    }
+
     // Вывод результата
     showResult () {
 
@@ -229,14 +256,10 @@ class AppData {
         expensesMonthValue.value = this.expensesMonth;
         additionalIncomeValue.value = this.addIncome.join(', ');
         additionalExpensesValue.value = this.addExpenses.join(', ');
-        incomePeriodValue.value = this.calcSavedMoney();
+        incomePeriodValue.value = (this.budget + this.incomeMonth - this.expensesMonth) * +periodSelect.value;
         targetMonthValue.value = Math.ceil(this.targetAmount / this.calcSavedMoney());
 
-        const selectRange = this.calcSavedMoney();
-
-        periodSelect.addEventListener('input', function () {
-            incomePeriodValue.value = periodSelect.value * selectRange;
-        }, this);
+        this.setIncomePeriodValue();
     }
 
     calcSavedMoney () {
@@ -247,7 +270,7 @@ class AppData {
     // Блокировка кнопки Рассчитать если Месячный доход не запонен =>> ()
     blockButtonStart () {
 
-        salaryAmount.addEventListener('input', function () {
+        salaryAmount.addEventListener('input', () => {
             btnStart.removeAttribute('disabled');
             periodSelect.removeAttribute('disabled');
         });
@@ -290,7 +313,7 @@ class AppData {
         const dataBlock = data.querySelectorAll('input[type=text]');
         
         dataBlock.forEach(function (item) {
-            item.removeAttribute('readonly');
+            item.removeAttribute('disabled');
         });
 
         calcBlock.forEach(function (item) {
@@ -301,6 +324,7 @@ class AppData {
             item.value = '';
         });
 
+        incomePeriodValue.value = '';
         periodSelect.value = '1';
         periodAmount.textContent = '1';
 
@@ -318,13 +342,15 @@ class AppData {
         this.moneyDeposit = 0;
         this.targetAmount = 0;
 
-        salaryAmount.addEventListener('input', function () {
+        salaryAmount.addEventListener('input', () => {
             btnStart.removeAttribute('disabled');
             periodSelect.removeAttribute('disabled');
         });
 
         btnStart.disabled = !salaryAmount.value.trim();
         periodSelect.setAttribute('disabled', true);
+
+        this.setIncomePeriodValue();
     }
 
     blockedInputData () {
@@ -332,7 +358,7 @@ class AppData {
         const dataBlock = data.querySelectorAll('input[type=text]');
     
         dataBlock.forEach(function (item) {
-            item.setAttribute('readonly', 'readonly');
+            item.setAttribute('disabled', true);
         });
 
         btnPlusIncomeAdd.setAttribute('disabled', true);

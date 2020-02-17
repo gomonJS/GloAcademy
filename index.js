@@ -76,8 +76,7 @@ class AppData {
 
         this.budget = +salaryAmount.value;
     
-        this.getExpInc(); // получение данных из полей - Обязательные расходы
-        // this.getIncome(); // получение данных из полей - Дополнительный доход
+        this.getExpInc(); // получение данных из полей - Обязательные расходы & Дополнительный доход
         this.getAddIncome(); // Возможный доход
         this.getTargetAmount(); // Цель сумма
         this.getAddExpenses(); // Возможные расходы (перечислите через запятую)
@@ -95,38 +94,6 @@ class AppData {
 
         this.budgetMonth = this.budget + this.incomeMonth - this.expensesMonth;
         this.budgetDay = Math.ceil(this.budgetMonth / 30);
-    }
-
-    // получение данных из полей - Дополнительный доход
-    getIncome () {
-
-        incomeItems = document.querySelectorAll('.income-items');
-
-        incomeItems.forEach( (item) => {
-
-            const itemIncome = item.querySelector('.income-title').value.trim(),
-                amountIncome = item.querySelector('.income-amount').value.trim();
-
-            if (itemIncome !== '' && amountIncome !== '') {
-                this.income[itemIncome] = +amountIncome;
-            }
-        }, this);
-    }
-
-    // получение данных из полей - Обязательные расходы
-    getExpenses () {
-
-        expensesItems = document.querySelectorAll('.expenses-items');
-
-        expensesItems.forEach( (item) => {
-
-            const itemExpenses = item.querySelector('.expenses-title').value.trim(),
-                amountExpenses = item.querySelector('.expenses-amount').value.trim();
-            
-            if (itemExpenses !== '' && amountExpenses !== '') {
-                this.expenses[itemExpenses] = +amountExpenses;
-            }
-        }, this);
     }
 
     // получение данных из полей - Обязательные расходы & Дополнительный доход
@@ -328,20 +295,6 @@ class AppData {
         periodSelect.value = '1';
         periodAmount.textContent = '1';
 
-        this.budget = 0; // общий доход без вычетов
-        this.budgetDay = 0; // беджет на 1 день с вычетом обязятельных расходов
-        this.budgetMonth = 0; // остаток суммы после вычета обязательных расходов
-        this.expensesMonth = 0; // сумма обязательных расходов
-        this.income = {}; // дополнительные доходы - getIncome()
-        this.incomeMonth = 0; // доходы за месяц
-        this.addIncome = []; // список дополнительных доходов - getAddIncome()
-        this.expenses = {}; // расходы - getExpenses()
-        this.addExpenses = []; // возможные расходы - getAddExpenses()
-        this.deposit = false;
-        this.percentDeposit = 0;
-        this.moneyDeposit = 0;
-        this.targetAmount = 0;
-
         salaryAmount.addEventListener('input', () => {
             btnStart.removeAttribute('disabled');
             periodSelect.removeAttribute('disabled');
@@ -349,6 +302,8 @@ class AppData {
 
         btnStart.disabled = !salaryAmount.value.trim();
         periodSelect.setAttribute('disabled', true);
+
+        Object.assign(this, new AppData());
 
         this.setIncomePeriodValue();
     }

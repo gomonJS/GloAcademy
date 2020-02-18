@@ -355,8 +355,10 @@ class AppData {
 
             depositPercent.addEventListener('change', () => {
 
-                if (isNumber(depositPercent.value) && +depositPercent.value <= 100) {
-                    depositPercent.value = depositPercent.value;
+                const temp = +depositPercent.value;
+
+                if (isNumber(temp) && +temp <= 100) {
+                    depositPercent.value = temp;
                     btnStart.removeAttribute('disabled');
                 } else {
                     depositPercent.value = '';

@@ -23,30 +23,14 @@ window.addEventListener('DOMContentLoaded', function () {
 
     let day = dateNow.getDay();
 
-    switch (day) {
+    let weekDay = ['Воскресение', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
 
-        case 0:
-            dayOf.textContent = 'Воскресение';
-            break;
-        case 1:
-            dayOf.textContent = 'Понедельник';
-            break;
-        case 2:
-            dayOf.textContent = 'Вторник';
-            break;
-        case 3:
-            dayOf.textContent = 'Среда';
-            break;
-        case 4:
-            dayOf.textContent = 'Четверг';
-            break;
-        case 5:
-            dayOf.textContent = 'Пятница';
-            break;
-        case 6:
-            dayOf.textContent = 'Суббота';
-            break;
-    }
+    weekDay.forEach((element, k) => {
+
+        if (day === k) {
+            dayOf.textContent = element;
+        }
+    });
 
     let timeNow = new Date();
 

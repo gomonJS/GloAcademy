@@ -7,7 +7,8 @@ window.addEventListener('DOMContentLoaded', function () {
 
         let timerHours = document.querySelector('#timer-hours'),
             timerMinutes = document.querySelector('#timer-minutes'),
-            timerSeconds = document.querySelector('#timer-seconds');
+            timerSeconds = document.querySelector('#timer-seconds'),
+            idInterval = '';
 
         function getTimeRemaining () {
 
@@ -23,11 +24,10 @@ window.addEventListener('DOMContentLoaded', function () {
 
         function updateClock () {
 
-            let timer = getTimeRemaining(),
-                idInterval = '';
+            let timer = getTimeRemaining();
         
-            if (timer.hours < 10) {
-                timerHours.textContent = '' + timer.hours;
+            if (timer.hours < 10 ) {
+                timerHours.textContent = '0' + timer.hours;
             } else {
                 timerHours.textContent = timer.hours;
             }
@@ -43,16 +43,15 @@ window.addEventListener('DOMContentLoaded', function () {
             } else {
                 timerSeconds.textContent = timer.seconds;
             }
-
-            if (timer.timeRemaning > 0) {
-                idInterval = setInterval(updateClock, 1000);
-            } else if (timer.timeRemaning === 0) {
-                clearInterval(idInterval);
-            }
         }
 
-        updateClock();
+        let timer = getTimeRemaining();
+        if (timer.timeRemaning > 0) {
+            idInterval = setInterval(updateClock, 1000);
+        } else if (timer.timeRemaning === 0) {
+            clearInterval(idInterval);
+        }
     }
 
-    countTimer('21 february 2020');
+    countTimer('20 february 2020');
 });

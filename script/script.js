@@ -24,7 +24,7 @@ window.addEventListener('DOMContentLoaded', function () {
         function updateClock () {
 
             let timer = getTimeRemaining(),
-                id;
+                idInterval = '';
         
             if (timer.hours < 10) {
                 timerHours.textContent = '' + timer.hours;
@@ -45,9 +45,9 @@ window.addEventListener('DOMContentLoaded', function () {
             }
 
             if (timer.timeRemaning > 0) {
-                id = setInterval(updateClock, 1000);
+                idInterval = setInterval(updateClock, 1000);
             } else if (timer.timeRemaning === 0) {
-                clearInterval(id);
+                clearInterval(idInterval);
             }
         }
 

@@ -2,7 +2,6 @@ window.addEventListener('DOMContentLoaded', function () {
 
     'use strict';
 
-            timerMinutes = document.querySelector('#timer-minutes'),
     let timesOfDay = document.querySelector('#times_of_day span'),
         dayOf = document.querySelector('#day span'),
         currentTime = document.querySelector('#current_time span'),

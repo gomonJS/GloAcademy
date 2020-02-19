@@ -2,57 +2,61 @@ window.addEventListener('DOMContentLoaded', function () {
 
     'use strict';
 
-    // timer
-    function countTimer (deadline) {
-
-        let timerHours = document.querySelector('#timer-hours'),
             timerMinutes = document.querySelector('#timer-minutes'),
-            timerSeconds = document.querySelector('#timer-seconds');
+    let timesOfDay = document.querySelector('#times_of_day span'),
+        dayOf = document.querySelector('#day span'),
+        currentTime = document.querySelector('#current_time span'),
+        newYear = document.querySelector('#new_year span');
 
-        function getTimeRemaining () {
+    let dateNow = new Date();
 
-            let dateStop = new Date(deadline).getTime(), // дата окончания
-            dateNow = new Date().getTime(), // текущая дата
-            timeRemaning = (dateStop - dateNow) / 1000, // Разница между датами | получение секунд
-            seconds = Math.floor(timeRemaning % 60), // получение секунд
-            minutes = Math.floor((timeRemaning / 60) % 60), // количетво минут
-            hours = Math.floor(timeRemaning / 60 / 60); // количество часов
+    let time = dateNow.getHours();
 
-            return {timeRemaning, hours, minutes, seconds};
-        }
-
-        function updateClock () {
-
-            let timer = getTimeRemaining(),
-                idInterval = '';
-        
-            if (timer.hours < 10) {
-                timerHours.textContent = '' + timer.hours;
-            } else {
-                timerHours.textContent = timer.hours;
-            }
-
-            if (timer.minutes < 10) {
-                timerMinutes.textContent = '0' + timer.minutes;
-            } else {
-                timerMinutes.textContent = timer.minutes;
-            }
-
-            if (timer.seconds < 10) {
-                timerSeconds.textContent = '0' + timer.seconds;
-            } else {
-                timerSeconds.textContent = timer.seconds;
-            }
-
-            if (timer.timeRemaning > 0) {
-                idInterval = setInterval(updateClock, 1000);
-            } else if (timer.timeRemaning === 0) {
-                clearInterval(idInterval);
-            }
-        }
-
-        updateClock();
+    if (time >= 4 && time <= 12) {
+        timesOfDay.textContent = 'Доброе утро';
+    } else if (time > 12 && time <= 16) {
+        timesOfDay.textContent = 'Добрый день';
+    } else if (time > 16 && time <= 24) {
+        timesOfDay.textContent = 'Добрый вечер';
+    } else {
+        timesOfDay.textContent = 'Доброй ночи';
     }
 
-    countTimer('21 february 2020');
+    let day = dateNow.getDay();
+
+    switch (day) {
+
+        case 0:
+            dayOf.textContent = 'Воскресение';
+            break;
+        case 1:
+            dayOf.textContent = 'Понедельник';
+            break;
+        case 2:
+            dayOf.textContent = 'Вторник';
+            break;
+        case 3:
+            dayOf.textContent = 'Среда';
+            break;
+        case 4:
+            dayOf.textContent = 'Четверг';
+            break;
+        case 5:
+            dayOf.textContent = 'Пятница';
+            break;
+        case 6:
+            dayOf.textContent = 'Суббота';
+            break;
+    }
+
+    let timeNow = new Date();
+
+    currentTime.textContent = `${timeNow.getHours()}:${timeNow.getMinutes()}:${timeNow.getSeconds()}`;
+
+    let timeNext = new Date('31 December 2020').getTime(),
+        timeCurrent = new Date().getTime(),
+        remaning = (timeNext - timeCurrent) / 1000,
+        countDay = remaning / 60 / 60 / 24;
+    
+    newYear.textContent = Math.floor(countDay);
 });

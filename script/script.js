@@ -43,14 +43,17 @@ window.addEventListener('DOMContentLoaded', function () {
             } else {
                 timerSeconds.textContent = timer.seconds;
             }
+
+            if (timer.timeRemaning <= 0) {
+
+                clearInterval(idInterval);
+                timerHours.textContent = '00';
+                timerMinutes.textContent = '00';
+                timerSeconds.textContent = '00';
+            }
         }
 
-        let timer = getTimeRemaining();
-        if (timer.timeRemaning > 0) {
-            idInterval = setInterval(updateClock, 1000);
-        } else if (timer.timeRemaning === 0) {
-            clearInterval(idInterval);
-        }
+        idInterval = setInterval(updateClock, 1000);
     }
 
     countTimer('20 february 2020');

@@ -1,16 +1,19 @@
-window.addEventListener('DOMContentLoaded', function () {
+window.addEventListener('DOMContentLoaded', () => {
 
     'use strict';
 
-    // timer
-    function countTimer (deadline) {
+    /**
+     * 
+     * @param {дата конца отсчета счетчика: 31 december 2020} deadline 
+     */
+    const countTimer = (deadline) => {
 
         let timerHours = document.querySelector('#timer-hours'),
             timerMinutes = document.querySelector('#timer-minutes'),
             timerSeconds = document.querySelector('#timer-seconds'),
             idInterval = '';
 
-        function getTimeRemaining () {
+        const getTimeRemaining = () => {
 
             let dateStop = new Date(deadline).getTime(), // дата окончания
             dateNow = new Date().getTime(), // текущая дата
@@ -20,9 +23,9 @@ window.addEventListener('DOMContentLoaded', function () {
             hours = Math.floor(timeRemaning / 60 / 60); // количество часов
 
             return {timeRemaning, hours, minutes, seconds};
-        }
+        };
 
-        function updateClock () {
+        const updateClock = () => {
 
             let timer = getTimeRemaining();
         
@@ -51,10 +54,88 @@ window.addEventListener('DOMContentLoaded', function () {
                 timerMinutes.textContent = '00';
                 timerSeconds.textContent = '00';
             }
-        }
+        };
 
         idInterval = setInterval(updateClock, 1000);
-    }
+    };
 
-    countTimer('20 february 2020');
+    // старт таймера
+    countTimer('22 february 2020');
+
+    /**
+     * 
+     * @param {} 
+     * 
+     * навигация сайта
+     */
+    const toggleMenu = () => {
+
+        const btnMenu = document.querySelector('.menu'),
+            menu = document.querySelector('menu'),
+            menuItems = menu.querySelectorAll('ul>li'),
+            closeBtn = document.querySelector('.close-btn');
+
+        const handlerMenu = () => {
+
+            menu.classList.toggle('active-menu');
+        };
+
+        btnMenu.addEventListener('click', handlerMenu);
+
+        closeBtn.addEventListener('click', handlerMenu);
+
+        menuItems.forEach((element) => element.addEventListener('click', handlerMenu));
+    };
+
+    // события меню навигации
+    toggleMenu();
+
+    /**
+     * 
+     */
+    const togglePopUp = () => {
+
+        const popup = document.querySelector('.popup'),
+            popupBtn = document.querySelectorAll('.popup-btn'),
+            popupClose = document.querySelector('.popup-close');
+
+        let idShow, count = 0, screenWidth = window.screen.width;
+
+        const fadeShow = () => {
+            
+            count++;
+            popup.style.opacity = `${count}%`;
+
+            if (count < 100) {
+                idShow = setTimeout(fadeShow, 0.1);
+            } else {
+                clearTimeout(idShow);
+                count = 0;
+            }
+        };
+
+        popupBtn.forEach((element) => {
+
+            element.addEventListener('click', () => {
+
+                popup.style.display = 'flex';
+
+                if (screenWidth > 768) {
+
+                    fadeShow();
+                } else {
+                    popup.style.opacity = 1;
+                }
+            });
+        });
+
+        popupClose.addEventListener('click', () => {
+
+            popup.style.display = 'none';
+            popup.style.opacity = '0';
+        });
+    };
+
+    // модальное окно
+    togglePopUp();
 });

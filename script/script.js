@@ -71,9 +71,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const toggleMenu = () => {
 
         const btnMenu = document.querySelector('.menu'),
-            menu = document.querySelector('menu'),
-            menuItems = menu.querySelectorAll('ul>li'),
-            closeBtn = document.querySelector('.close-btn');
+            menu = document.querySelector('menu');
 
         const handlerMenu = () => {
 
@@ -82,9 +80,18 @@ window.addEventListener('DOMContentLoaded', () => {
 
         btnMenu.addEventListener('click', handlerMenu);
 
-        closeBtn.addEventListener('click', handlerMenu);
+        menu.addEventListener('click', (event) => {
 
-        menuItems.forEach((element) => element.addEventListener('click', handlerMenu));
+            let target = event.target;
+
+            if (target.classList.contains('close-btn')) {
+                handlerMenu();
+            }
+
+            if (target.closest('li')) {
+                handlerMenu();
+            }
+        });
     };
 
     // события меню навигации
@@ -96,8 +103,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const togglePopUp = () => {
 
         const popup = document.querySelector('.popup'),
-            popupBtn = document.querySelectorAll('.popup-btn'),
-            popupClose = document.querySelector('.popup-close');
+            popupBtn = document.querySelectorAll('.popup-btn');
 
         let idShow, count = 0, screenWidth = window.screen.width;
 
@@ -129,10 +135,21 @@ window.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        popupClose.addEventListener('click', () => {
+        popup.addEventListener('click', (event) => {
 
-            popup.style.display = 'none';
-            popup.style.opacity = '0';
+            let target = event.target;
+
+            if (target.classList.contains('popup-close')) {
+                popup.style.display = 'none';
+                popup.style.opacity = '0';
+            } else {
+                target = target.closest('.popup-content');
+            
+                if (!target) {
+                    popup.style.display = 'none';
+                    popup.style.opacity = '0';
+                }
+            }
         });
     };
 
@@ -165,4 +182,52 @@ window.addEventListener('DOMContentLoaded', () => {
     };
 
     clickAnchor();
+
+
+    /**
+     * 
+     * Табы услуг
+     */
+    const tabs = () => {
+        
+        const
+            // родитель табов 
+            serviceHeader = document.querySelector('.service-header'),
+            // коллекция табов
+            tab = serviceHeader.querySelectorAll('.service-header-tab'),
+            // коллеция контента для табов
+            tabContent = document.querySelectorAll('.service-tab');
+
+        const toggleTabContent = (index) => {
+
+            for (let i = 0; i < tabContent.length; i++) {
+
+                if (index === i) {
+                    tab[i].classList.add('active');
+                    tabContent[i].classList.remove('d-none');
+                } else {
+                    tab[i].classList.remove('active');
+                    tabContent[i].classList.add('d-none');
+                }
+            }
+        };
+
+        serviceHeader.addEventListener('click', (event) => {
+
+            let target = event.target;
+            target = target.closest('.service-header-tab');
+
+            if (target) {
+                
+                tab.forEach((element, i) => {
+
+                    if (element === target) {
+                        toggleTabContent(i);
+                    }
+                });
+            }
+        });
+    };
+
+    tabs();
 });

@@ -250,7 +250,7 @@ window.addEventListener('DOMContentLoaded', () => {
         // если есть слайды, создаем li
         if (slide) {
             
-            slide.forEach((element) => {
+            slide.forEach(() => {
 
                 let e = document.createElement('li');
                 e.classList.add('dot');

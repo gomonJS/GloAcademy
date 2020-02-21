@@ -241,21 +241,25 @@ window.addEventListener('DOMContentLoaded', () => {
         const slider = document.querySelector('.portfolio-content'),
             slide = document.querySelectorAll('.portfolio-item'),
             btn = document.querySelectorAll('.portfolio-btn'),
-            dot = document.querySelectorAll('.dot'),
             portfolioDots = document.querySelector('.portfolio-dots');
 
+            
         let currentSlide = 0,
             interval;
 
-        // const addDots = () => {
+        // если есть слайды, создаем li
+        if (slide) {
+            
+            slide.forEach((element) => {
 
-        //     let countSlide = slide.length;
+                let e = document.createElement('li');
+                e.classList.add('dot');
+                portfolioDots.append(e);
+            });
+        }
 
-
-        // };
-
-        // if (slide) {
-        // }
+        // созданные li
+        const dot = document.querySelectorAll('.dot');
 
         const prevSlide = (elem, index, strClas) => {
             elem[index].classList.remove(strClas);

@@ -250,12 +250,12 @@ window.addEventListener('DOMContentLoaded', () => {
         // если есть слайды, создаем li
         if (slide) {
             
-            slide.forEach(() => {
+            for (let i = 0; i < slide.length; i++) {
 
                 let e = document.createElement('li');
                 e.classList.add('dot');
                 portfolioDots.append(e);
-            });
+            }
         }
 
         // созданные li
@@ -344,8 +344,55 @@ window.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        startSlide(1500);
+        startSlide(3500);
     };
 
     slider();
+
+
+    /**
+     * 
+     * Блок Наша команда. Наведение на фото меняется картинка
+     * @param{}
+     */
+    const hoverReplaceImage = () => {
+
+        const command = document.getElementById('command');
+
+        let tempImage = '';
+
+        command.addEventListener('mouseover', (event) => {
+
+            if (event.target.matches('.command__photo')) {
+                tempImage = event.target.src;
+                event.target.src = event.target.dataset.img;
+            }
+        });
+
+        command.addEventListener('mouseout', (event) => {
+
+            if (event.target.matches('.command__photo')) {
+                event.target.src = tempImage;
+            }
+        });
+    };
+
+    hoverReplaceImage();
+
+
+    /**
+     * 
+     * Ввод числа в расчет стоимости
+     */
+    const calcInputNumber = () => {
+
+        const calcBlock = document.querySelector('.calc-block');
+
+        calcBlock.addEventListener('input', (event) => {
+
+            event.target.value = event.target.value.replace(/\D/g, '');
+        });
+    };
+
+    calcInputNumber();
 });

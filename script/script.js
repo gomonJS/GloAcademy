@@ -382,6 +382,27 @@ window.addEventListener('DOMContentLoaded', () => {
 
     /**
      * 
+     * Картинки наша команда, дабавление текта в атрибут alt
+     */
+    const addTextAltImage = () => {
+
+        const command = document.getElementById('command'),
+            img = [...command.querySelectorAll('.command__photo')],
+            description = command.querySelectorAll('.description');
+
+        for (let item in img) {
+            
+            if (!img[item].alt) {
+                img[item].alt = description[item].textContent;
+            }
+        }
+    };
+
+    addTextAltImage();
+
+
+    /**
+     * 
      * Ввод числа в расчет стоимости
      */
     const calcInputNumber = () => {

@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
             popupBtn = document.querySelectorAll('.popup-btn');
 
         const screenWidth = window.screen.width;
-        
+
         let idShow, count = 0;
 
 
@@ -361,6 +361,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const command = document.getElementById('command');
 
+        // старое занчение src картинки
         let tempImage = '';
 
         command.addEventListener('mouseover', (event) => {
@@ -384,7 +385,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /**
      * 
-     * Картинки наша команда, дабавление текта в атрибут alt
+     * Картинки наша команда, дабавление текста в атрибут alt
      */
     const addTextAltImage = () => {
 

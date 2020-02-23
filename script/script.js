@@ -1,4 +1,4 @@
-window.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
 
     'use strict';
 
@@ -105,7 +105,10 @@ window.addEventListener('DOMContentLoaded', () => {
         const popup = document.querySelector('.popup'),
             popupBtn = document.querySelectorAll('.popup-btn');
 
-        let idShow, count = 0, screenWidth = window.screen.width;
+        const screenWidth = window.screen.width;
+        
+        let idShow, count = 0;
+
 
         const fadeShow = () => {
             
@@ -240,7 +243,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
         const slider = document.querySelector('.portfolio-content'),
             slide = document.querySelectorAll('.portfolio-item'),
-            btn = document.querySelectorAll('.portfolio-btn'),
             portfolioDots = document.querySelector('.portfolio-dots');
 
             
@@ -407,11 +409,12 @@ window.addEventListener('DOMContentLoaded', () => {
      */
     const calcInputNumber = () => {
 
-        const calcBlock = document.querySelector('.calc-block');
+        const calcBlock = document.querySelector('.calc-block'),
+            inputNumber = calcBlock.querySelectorAll('input');
 
-        calcBlock.addEventListener('input', (event) => {
+        inputNumber.addEventListener('input', (event) => {
 
-            event.target.value = event.target.value.replace(/\D/g, '');
+            event.target.value = event.target.value.replace(/[^0-9.-]/, '');
         });
     };
 

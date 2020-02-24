@@ -413,10 +413,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const calcBlock = document.querySelector('.calc-block'),
             inputNumber = calcBlock.querySelectorAll('input');
 
+        // зпарет ввода букв
         inputNumber.addEventListener('input', (event) => {
 
             event.target.value = event.target.value.replace(/[^0-9.-]/, '');
         });
+        
     };
 
     calcInputNumber();

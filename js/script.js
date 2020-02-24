@@ -36,7 +36,7 @@ const showResults = msgText => showResponseBlock(
 const showNoResults = () => showResponseBlock(
 	'.dialog__response-block_no-results');
 
-//
+// функция вывода/вызова после ввода пользователем данных 
 const tryFilterByType = (type, values) => {
 
 	try {

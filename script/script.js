@@ -413,10 +413,19 @@ document.addEventListener('DOMContentLoaded', () => {
         const calcBlock = document.querySelector('.calc-block'),
             inputNumber = calcBlock.querySelectorAll('input');
 
-        inputNumber.addEventListener('input', (event) => {
 
-            event.target.value = event.target.value.replace(/[^0-9.-]/, '');
+        inputNumber.forEach((element) => {
+
+            element.addEventListener('input', function (event) {
+
+                event.target.value = event.target.value.replace(/[^0-9.-]/, '');
+            });
         });
+
+        // inputNumber.addEventListener('input', (event) => {
+
+        //     event.target.value = event.target.value.replace(/[^0-9.-]/, '');
+        // }, false);
     };
 
     calcInputNumber();

@@ -421,11 +421,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 event.target.value = event.target.value.replace(/[^0-9.-]/, '');
             });
         });
-
-        // inputNumber.addEventListener('input', (event) => {
-
-        //     event.target.value = event.target.value.replace(/[^0-9.-]/, '');
-        // }, false);
     };
 
     calcInputNumber();

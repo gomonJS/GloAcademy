@@ -41,7 +41,13 @@ const tryFilterByType = (type, values) => {
 
 	try {
 
-		const valuesArray = eval(`filterByType('${type}', ${values})`).join(", ");
+		const valuesArray = new Function(
+			`return filterByType('${type}', ${values})`
+		);
+
+		let arr = valuesArray(type, values);
+
+		arr.join(', ');
 		
 		const alertMsg = (valuesArray.length) ?
 			`Данные с типом ${type}: ${valuesArray}` :

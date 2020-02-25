@@ -407,6 +407,7 @@ document.addEventListener('DOMContentLoaded', () => {
     /**
      * 
      * Ввод числа в расчет стоимости
+     * @param{} price
      */
     const calcInputNumber = (price = 100) => {
 

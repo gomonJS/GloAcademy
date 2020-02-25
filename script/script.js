@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // старт таймера
-    countTimer('22 february 2020');
+    countTimer('27 february 2020');
 
     /**
      * 
@@ -354,8 +354,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /**
      * 
+     * @param {}
+     * 
      * Блок Наша команда. Наведение на фото меняется картинка
-     * @param{}
      */
     const hoverReplaceImage = () => {
 
@@ -406,8 +407,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /**
      * 
+     * @param {} price
+     * 
      * Ввод числа в расчет стоимости
-     * @param{} price
      */
     const calcInputNumber = (price = 100) => {
 
@@ -419,7 +421,7 @@ document.addEventListener('DOMContentLoaded', () => {
             calcDay = document.querySelector('.calc-day'),
             totalValue = document.getElementById('total');
 
-        // зпарет ввода букв
+        // запрет ввода букв
         inputNumber.forEach((element) => {
 
             element.addEventListener('input', function (event) {

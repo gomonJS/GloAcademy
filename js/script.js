@@ -49,8 +49,8 @@ const tryFilterByType = (type, values) => {
 
 		arr.join(', ');
 		
-		const alertMsg = (valuesArray.length) ?
-			`Данные с типом ${type}: ${valuesArray}` :
+		const alertMsg = (arr.length) ?
+			`Данные с типом ${type}: ${arr}` :
 			`Отсутствуют данные типа ${type}`;
 		showResults(alertMsg);
 	} catch (e) {

@@ -471,4 +471,146 @@ document.addEventListener('DOMContentLoaded', () => {
 
     calcInputNumber(100);
 
+
+    /**
+     * 
+     * @param {}
+     * отправка данных из формы - ajax
+     */
+    const sendForm = () => {
+
+        const errorMessage = 'Что-то пошло не так',
+            loadMessage = 'Загрузка...',
+            successMessage = 'Сообщение отправлено, в ближайшее время мы с Вами свяжемся';
+
+        const form = document.getElementById('form1');
+        const form2 = document.getElementById('form2');
+        const form3 = document.getElementById('form3');
+        // вывод сообщения на страницу
+        const statusMessage = document.createElement('div');
+        statusMessage.style.cssText = 'font-size: 22px';
+
+        /**
+         * 
+         * @param {*} body 
+         * @param {*} outputData 
+         * @param {*} errorData 
+         * 
+         * функция запроса на сервер
+         */
+        const postData = (body, outputData, errorData) => {
+
+            const request = new XMLHttpRequest();
+
+            request.addEventListener('readystatechange', () => {
+
+                if (request.readyState !== 4) {
+                    return;
+                }
+
+                if (request.status === 200) {
+                    outputData();
+                } else {
+                    errorData(request.status);
+                }
+            });
+            
+            request.open('POST', './server.php');
+            request.setRequestHeader('Content-Type', 'application/json');
+            request.send(JSON.stringify(body));
+        };
+
+        // обрабочик события формы - 1
+        form.addEventListener('submit', (event) => {
+
+            event.preventDefault();
+
+            form.appendChild(statusMessage);
+            statusMessage.textContent = loadMessage;
+
+            const formData = new  FormData(form);
+            let body = {};
+
+            formData.forEach((value, key) => {
+
+                body[key] = value;
+            });
+            
+            postData(body, () => {
+                statusMessage.textContent = successMessage;
+            }, (error) => {
+                statusMessage.textContent = errorMessage;
+                console.error(error);
+            });
+
+            const timeClearData = setTimeout(() => {
+                statusMessage.remove();
+                form.reset();
+                clearTimeout(timeClearData);
+            }, 3000);
+        });
+
+        // обрабочик события формы - 2
+        form2.addEventListener('submit', (event) => {
+
+            event.preventDefault();
+
+            form2.appendChild(statusMessage);
+            statusMessage.textContent = loadMessage;
+
+            const formData = new  FormData(form2);
+            let body = {};
+
+            formData.forEach((value, key) => {
+
+                body[key] = value;
+            });
+            
+            postData(body, () => {
+                statusMessage.textContent = successMessage;
+            }, (error) => {
+                statusMessage.textContent = errorMessage;
+                console.error(error);
+            });
+            
+            const timeClearData = setTimeout(() => {
+                statusMessage.remove();
+                form2.reset();
+                clearTimeout(timeClearData);
+            }, 3000);
+        });
+
+        // обрабочик события формы - 3
+        form3.addEventListener('submit', (event) => {
+
+            event.preventDefault();
+
+            form3.appendChild(statusMessage);
+            statusMessage.style.cssText = 'color: #ffffff';
+            statusMessage.textContent = loadMessage;
+
+            const formData = new  FormData(form3);
+            let body = {};
+
+            formData.forEach((value, key) => {
+
+                body[key] = value;
+            });
+            
+            postData(body, () => {
+                statusMessage.textContent = successMessage;
+            }, (error) => {
+                statusMessage.textContent = errorMessage;
+                console.error(error);
+            });
+            
+            const timeClearData = setTimeout(() => {
+                statusMessage.remove();
+                form3.reset();
+                clearTimeout(timeClearData);
+            }, 3000);
+        });
+    };
+
+    sendForm();
 });

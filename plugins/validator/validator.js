@@ -117,7 +117,7 @@ class Validator {
 
         style.textContent = `
         input.success {
-            border: 2px solid green !important;
+            border: 2px solid blue !important;
         }
         input.error {
             border: 2px solid red !important;

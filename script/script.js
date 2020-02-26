@@ -470,4 +470,5 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     calcInputNumber(100);
+
 });

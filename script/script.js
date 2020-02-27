@@ -470,54 +470,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     calcInputNumber(100);
-
-
-    /**
-     * 
-     * @param {*} data
-     * 
-     * валидация форм
-     */
-    const validationForm = (data) => {
-
-        const formElem = [...data];
-        const error = new Set();
-
-        let flag = false;
-
-        const init = (event) => {
-
-            const target = event.target;
-
-            if (target.type === 'text' && !(/^[а-яёА-ЯЁ\s\-]+$/).test(target.value)) {
-                error.add(target);
-            } else {
-                error.delete(target);
-            }
-
-            if (target.type === 'email' && !(/^\w+@\w+\.\w{2,}$/).test(target.value)) {
-                error.add(target);
-            } else {
-                error.delete(target);
-            }
-
-            if (target.type === 'tel' && !(/^\+?[78]([-()]*\d){10}$/).test(target.value)) {
-                error.add(target);
-            } else {
-                error.delete(target);
-            }
-        };
-        
-        data.addEventListener('change', init);
-
-        if (error.size !== 0) {
-            data.addEventListener('submit', (event) => event.preventDefault());
-        } else {
-            flag = true;
-        }
-
-        return flag;
-    };
     
 
     /**
@@ -531,9 +483,8 @@ document.addEventListener('DOMContentLoaded', () => {
             loadMessage = 'Загрузка...',
             successMessage = 'Сообщение отправлено, в ближайшее время мы с Вами свяжемся';
 
-        const form = document.getElementById('form1');
-        const form2 = document.getElementById('form2');
-        const form3 = document.getElementById('form3');
+        const forms = document.querySelectorAll('form');
+        
         // вывод сообщения на страницу
         const statusMessage = document.createElement('div');
         statusMessage.style.cssText = 'font-size: 22px';
@@ -568,52 +519,97 @@ document.addEventListener('DOMContentLoaded', () => {
             request.send(JSON.stringify(body));
         };
 
-        const eventFormData = (formId) => {
-
-            if (formId) {
+        const eventFormData = (form) => {
                 
-                // обрабочик события формы
-                formId.addEventListener('submit', (event) => {
+            // обрабочик события формы
+            form.appendChild(statusMessage);
+            statusMessage.textContent = loadMessage;
 
-                    event.preventDefault();
-                    formId.appendChild(statusMessage);
-                    statusMessage.textContent = loadMessage;
+            const formData = new  FormData(form);
+            
+            let body = {};
 
-                    const formData = new  FormData(formId);
-                    
-                    let body = {};
+            formData.forEach((value, key) => {
 
-                    formData.forEach((value, key) => {
+                body[key] = value;
+            });
+            
+            postData(body, () => {
+                statusMessage.textContent = successMessage;
+            }, (error) => {
+                statusMessage.textContent = errorMessage;
+                console.error(error);
+            });
 
-                        body[key] = value;
-                    });
-                    
-                    postData(body, () => {
-                        statusMessage.textContent = successMessage;
-                    }, (error) => {
-                        statusMessage.textContent = errorMessage;
-                        console.error(error);
-                    });
-
-                    const timeClearData = setTimeout(() => {
-                        statusMessage.remove();
-                        formId.reset();
-                        clearTimeout(timeClearData);
-                    }, 3000); 
-                });
-            }
+            const timeClearData = setTimeout(() => {
+                statusMessage.remove();
+                form.reset();
+                clearTimeout(timeClearData);
+            }, 3000); 
         };
 
-        if (validationForm(form)) {
-            validationForm(form);
-            eventFormData(form);
-        } else {
-            eventFormData();
-        }
-        // validationForm(form);
-        // eventFormData(form);
-        // eventFormData(form2);
-        // eventFormData(form3);
+        /**
+         * 
+         * @param {*} form
+         * 
+         * валидация форм
+         */
+        const validationForm = (form) => {
+
+            const error = new Set();
+
+
+            const init = () => {
+
+                [...form].forEach((elem) => {
+
+                    if (elem.type === 'text') {
+                        !(/^[а-яёА-ЯЁ\s\-]+$/).test(elem.value) ?
+                            error.add(elem) : error.delete(elem);
+                    }
+
+                    if (elem.type === 'email') {
+                        !(/^\w+@\w+\.\w{2,}$/).test(elem.value) ?
+                            error.add(elem) : error.delete(elem);
+                    }
+
+                    if (elem.type === 'tel') {
+                        !(/^\+?[78]([-()]*\d){10}$/).test(elem.value) ?
+                            error.add(elem) : error.delete(elem);
+                    }
+
+                    if (elem.type === 'message') {
+                        !(/^[a-zA-Zа-яёА-ЯЁ\s\-]+$/).test(elem.value) ?
+                            error.add(elem) : error.delete(elem);
+                    }
+                });
+            };
+            
+            init();
+
+            form.addEventListener('change', init);
+
+            form.addEventListener('submit', (e) => {
+
+                e.preventDefault();
+                let errorType = [];
+
+                if (error.size === 0) {
+                    statusMessage.remove();
+                    eventFormData(form);
+                } else {
+                    error.forEach((element) => {
+                        errorType.push(element.placeholder);
+                    });
+                    statusMessage.textContent = 'Неверные данные: ' + [...errorType];
+                    error.size > 0 ? statusMessage.style.cssText = 'color: red' :
+                        statusMessage.style.cssText = 'color: #ffffff !important';
+                    form.appendChild(statusMessage);
+                }
+            });
+        };
+
+        forms.forEach(validationForm);
     };
 
     sendForm();

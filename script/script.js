@@ -474,58 +474,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /**
      * 
-     * @param {*} data 
-     * @param {*} params 
+     * @param {*} data
      * 
      * валидация форм
      */
-    const validationForm = (data, method, params = {}) => {
+    const validationForm = (data) => {
 
         const formElem = [...data];
+        const error = new Set();
 
-        let methodIn = new Function(`return method('${data.id}')`);
+        let flag = false;
 
-        console.log(methodIn);
+        const init = (event) => {
 
-        const init = (name, inputData) => {
+            const target = event.target;
 
-            if ('name' === name && inputData.value !== '') {
-                
-                if (!inputData.value.replace(/^[а-яёА-ЯЁ\s\-]+$/, '')) {
-                    methodIn();
-                } else {
-                    inputData.value = 'Не корректные данные ' + name;
-                    data.addEventListener('submit', (e) =>  e.preventDefault());
-                }
+            if (target.type === 'text' && !(/^[а-яёА-ЯЁ\s\-]+$/).test(target.value)) {
+                error.add(target);
+            } else {
+                error.delete(target);
             }
 
-            if ('email' === name && inputData.value !== '') {
-                
-                if (!inputData.value.replace(/^\w+@\w+\.\w{2,}$/, '')) {
-                    method();
-                } else {
-                    inputData.value = 'Не корректные данные ' + name;
-                    data.addEventListener('submit', (e) =>  e.preventDefault());
-                }
+            if (target.type === 'email' && !(/^\w+@\w+\.\w{2,}$/).test(target.value)) {
+                error.add(target);
+            } else {
+                error.delete(target);
             }
 
-            if ('phone' === name && inputData.value !== '') {
-                
-                if (!inputData.value.replace(/^\+?[78]([-()]*\d){10}$/, '')) {
-                    method();
-                } else {
-                    inputData.value = 'Не корректные данные ' + name;
-                    data.addEventListener('submit', (e) =>  e.preventDefault());
-                }
+            if (target.type === 'tel' && !(/^\+?[78]([-()]*\d){10}$/).test(target.value)) {
+                error.add(target);
+            } else {
+                error.delete(target);
             }
         };
         
-        formElem.forEach((element) => {
-            element.addEventListener('change', (event) => {
+        data.addEventListener('change', init);
 
-                init(params[event.target.id], event.target);
-            });
-        });
+        if (error.size !== 0) {
+            data.addEventListener('submit', (event) => event.preventDefault());
+        } else {
+            flag = true;
+        }
+
+        return flag;
     };
     
 
@@ -580,11 +571,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const eventFormData = (formId) => {
 
             if (formId) {
+                
                 // обрабочик события формы
                 formId.addEventListener('submit', (event) => {
 
                     event.preventDefault();
-
                     formId.appendChild(statusMessage);
                     statusMessage.textContent = loadMessage;
 
@@ -608,26 +599,22 @@ document.addEventListener('DOMContentLoaded', () => {
                         statusMessage.remove();
                         formId.reset();
                         clearTimeout(timeClearData);
-                    }, 3000);
+                    }, 3000); 
                 });
             }
         };
 
-        validationForm(
-            form,
-            'eventFormData(form)',
-            {
-                'form1-name': 'name', 
-                'form1-email': 'email', 
-                'form1-phone': 'phone'
-            }
-        );
-        eventFormData(form);
+        if (validationForm(form)) {
+            validationForm(form);
+            eventFormData(form);
+        } else {
+            eventFormData();
+        }
+        // validationForm(form);
+        // eventFormData(form);
         // eventFormData(form2);
         // eventFormData(form3);
     };
 
     sendForm();
 });
-
-// https://github.com/gomonJS/GloAcademy/tree/lesson24

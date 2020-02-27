@@ -474,6 +474,63 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /**
      * 
+     * @param {*} data 
+     * @param {*} params 
+     * 
+     * валидация форм
+     */
+    const validationForm = (data, method, params = {}) => {
+
+        const formElem = [...data];
+
+        let methodIn = new Function(`return method('${data.id}')`);
+
+        console.log(methodIn);
+
+        const init = (name, inputData) => {
+
+            if ('name' === name && inputData.value !== '') {
+                
+                if (!inputData.value.replace(/^[а-яёА-ЯЁ\s\-]+$/, '')) {
+                    methodIn();
+                } else {
+                    inputData.value = 'Не корректные данные ' + name;
+                    data.addEventListener('submit', (e) =>  e.preventDefault());
+                }
+            }
+
+            if ('email' === name && inputData.value !== '') {
+                
+                if (!inputData.value.replace(/^\w+@\w+\.\w{2,}$/, '')) {
+                    method();
+                } else {
+                    inputData.value = 'Не корректные данные ' + name;
+                    data.addEventListener('submit', (e) =>  e.preventDefault());
+                }
+            }
+
+            if ('phone' === name && inputData.value !== '') {
+                
+                if (!inputData.value.replace(/^\+?[78]([-()]*\d){10}$/, '')) {
+                    method();
+                } else {
+                    inputData.value = 'Не корректные данные ' + name;
+                    data.addEventListener('submit', (e) =>  e.preventDefault());
+                }
+            }
+        };
+        
+        formElem.forEach((element) => {
+            element.addEventListener('change', (event) => {
+
+                init(params[event.target.id], event.target);
+            });
+        });
+    };
+    
+
+    /**
+     * 
      * @param {}
      * отправка данных из формы - ajax
      */
@@ -522,41 +579,55 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const eventFormData = (formId) => {
 
-            // обрабочик события формы
-            formId.addEventListener('submit', (event) => {
+            if (formId) {
+                // обрабочик события формы
+                formId.addEventListener('submit', (event) => {
 
-                event.preventDefault();
+                    event.preventDefault();
 
-                formId.appendChild(statusMessage);
-                statusMessage.textContent = loadMessage;
+                    formId.appendChild(statusMessage);
+                    statusMessage.textContent = loadMessage;
 
-                const formData = new  FormData(formId);
-                let body = {};
+                    const formData = new  FormData(formId);
+                    
+                    let body = {};
 
-                formData.forEach((value, key) => {
+                    formData.forEach((value, key) => {
 
-                    body[key] = value;
+                        body[key] = value;
+                    });
+                    
+                    postData(body, () => {
+                        statusMessage.textContent = successMessage;
+                    }, (error) => {
+                        statusMessage.textContent = errorMessage;
+                        console.error(error);
+                    });
+
+                    const timeClearData = setTimeout(() => {
+                        statusMessage.remove();
+                        formId.reset();
+                        clearTimeout(timeClearData);
+                    }, 3000);
                 });
-                
-                postData(body, () => {
-                    statusMessage.textContent = successMessage;
-                }, (error) => {
-                    statusMessage.textContent = errorMessage;
-                    console.error(error);
-                });
-
-                const timeClearData = setTimeout(() => {
-                    statusMessage.remove();
-                    formId.reset();
-                    clearTimeout(timeClearData);
-                }, 3000);
-            });
+            }
         };
 
+        validationForm(
+            form,
+            'eventFormData(form)',
+            {
+                'form1-name': 'name', 
+                'form1-email': 'email', 
+                'form1-phone': 'phone'
+            }
+        );
         eventFormData(form);
-        eventFormData(form2);
-        eventFormData(form3);
+        // eventFormData(form2);
+        // eventFormData(form3);
     };
 
     sendForm();
 });
+
+// https://github.com/gomonJS/GloAcademy/tree/lesson24

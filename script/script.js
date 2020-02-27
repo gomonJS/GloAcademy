@@ -520,96 +520,42 @@ document.addEventListener('DOMContentLoaded', () => {
             request.send(JSON.stringify(body));
         };
 
-        // обрабочик события формы - 1
-        form.addEventListener('submit', (event) => {
+        const eventFormData = (formId) => {
 
-            event.preventDefault();
+            // обрабочик события формы
+            formId.addEventListener('submit', (event) => {
 
-            form.appendChild(statusMessage);
-            statusMessage.textContent = loadMessage;
+                event.preventDefault();
 
-            const formData = new  FormData(form);
-            let body = {};
+                formId.appendChild(statusMessage);
+                statusMessage.textContent = loadMessage;
 
-            formData.forEach((value, key) => {
+                const formData = new  FormData(formId);
+                let body = {};
 
-                body[key] = value;
+                formData.forEach((value, key) => {
+
+                    body[key] = value;
+                });
+                
+                postData(body, () => {
+                    statusMessage.textContent = successMessage;
+                }, (error) => {
+                    statusMessage.textContent = errorMessage;
+                    console.error(error);
+                });
+
+                const timeClearData = setTimeout(() => {
+                    statusMessage.remove();
+                    formId.reset();
+                    clearTimeout(timeClearData);
+                }, 3000);
             });
-            
-            postData(body, () => {
-                statusMessage.textContent = successMessage;
-            }, (error) => {
-                statusMessage.textContent = errorMessage;
-                console.error(error);
-            });
+        };
 
-            const timeClearData = setTimeout(() => {
-                statusMessage.remove();
-                form.reset();
-                clearTimeout(timeClearData);
-            }, 3000);
-        });
-
-        // обрабочик события формы - 2
-        form2.addEventListener('submit', (event) => {
-
-            event.preventDefault();
-
-            form2.appendChild(statusMessage);
-            statusMessage.textContent = loadMessage;
-
-            const formData = new  FormData(form2);
-            let body = {};
-
-            formData.forEach((value, key) => {
-
-                body[key] = value;
-            });
-            
-            postData(body, () => {
-                statusMessage.textContent = successMessage;
-            }, (error) => {
-                statusMessage.textContent = errorMessage;
-                console.error(error);
-            });
-            
-            const timeClearData = setTimeout(() => {
-                statusMessage.remove();
-                form2.reset();
-                clearTimeout(timeClearData);
-            }, 3000);
-        });
-
-        // обрабочик события формы - 3
-        form3.addEventListener('submit', (event) => {
-
-            event.preventDefault();
-
-            form3.appendChild(statusMessage);
-            statusMessage.style.cssText = 'color: #ffffff';
-            statusMessage.textContent = loadMessage;
-
-            const formData = new  FormData(form3);
-            let body = {};
-
-            formData.forEach((value, key) => {
-
-                body[key] = value;
-            });
-            
-            postData(body, () => {
-                statusMessage.textContent = successMessage;
-            }, (error) => {
-                statusMessage.textContent = errorMessage;
-                console.error(error);
-            });
-            
-            const timeClearData = setTimeout(() => {
-                statusMessage.remove();
-                form3.reset();
-                clearTimeout(timeClearData);
-            }, 3000);
-        });
+        eventFormData(form);
+        eventFormData(form2);
+        eventFormData(form3);
     };
 
     sendForm();

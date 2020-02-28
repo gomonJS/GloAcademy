@@ -520,32 +520,37 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         const eventFormData = (form) => {
-                
-            // обрабочик события формы
-            form.appendChild(statusMessage);
-            statusMessage.textContent = loadMessage;
 
+            // обрабочик события формы
             const formData = new  FormData(form);
             
-            let body = {};
+            let body = {}, flag = false;
 
             formData.forEach((value, key) => {
 
                 body[key] = value;
             });
-            
-            postData(body, () => {
-                statusMessage.textContent = successMessage;
-            }, (error) => {
-                statusMessage.textContent = errorMessage;
-                console.error(error);
-            });
 
-            const timeClearData = setTimeout(() => {
-                statusMessage.remove();
-                form.reset();
-                clearTimeout(timeClearData);
-            }, 3000); 
+            for (let value in body) { if (body[value] !== '') {flag = true;} }
+            
+            if (flag) {
+                
+                form.appendChild(statusMessage);
+                statusMessage.textContent = loadMessage;
+
+                postData(body, () => {
+                    statusMessage.textContent = successMessage;
+                }, (error) => {
+                    statusMessage.textContent = errorMessage;
+                    console.error(error);
+                });
+    
+                const timeClearData = setTimeout(() => {
+                    statusMessage.remove();
+                    form.reset();
+                    clearTimeout(timeClearData);
+                }, 3000); 
+            }
         };
 
         /**
@@ -579,7 +584,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
 
                     if (elem.type === 'message') {
-                        !(/^[a-zA-Zа-яёА-ЯЁ\s\-]+$/).test(elem.value) ?
+                        !(/^[а-яёА-ЯЁ \s\-]+$/).test(elem.value) ?
                             error.add(elem) : error.delete(elem);
                     }
                 });
@@ -596,14 +601,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (error.size === 0) {
                     statusMessage.remove();
+                    errorType = [];
                     eventFormData(form);
                 } else {
                     error.forEach((element) => {
                         errorType.push(element.placeholder);
                     });
                     statusMessage.textContent = 'Неверные данные: ' + [...errorType];
-                    error.size > 0 ? statusMessage.style.cssText = 'color: red' :
-                        statusMessage.style.cssText = 'color: #ffffff !important';
                     form.appendChild(statusMessage);
                 }
             });

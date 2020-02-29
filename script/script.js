@@ -479,6 +479,7 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     const sendForm = () => {
 
+        const DONE_OPERATION = 4, REQUEST_SERVER = 200;
         const errorMessage = 'Что-то пошло не так',
             loadMessage = 'Загрузка...',
             successMessage = 'Сообщение отправлено, в ближайшее время мы с Вами свяжемся';
@@ -504,11 +505,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 request.addEventListener('readystatechange', () => {
     
-                    if (request.readyState !== 4) {
+                    if (request.readyState !== DONE_OPERATION) {
                         return;
                     }
     
-                    if (request.status === 200) {
+                    if (request.status === REQUEST_SERVER) {
                         // outputData();
                         resolve();
                     } else {

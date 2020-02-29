@@ -540,6 +540,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (flag) {
                 
                 form.appendChild(statusMessage);
+                statusMessage.style.cssText = 'color: #ffffff';
                 statusMessage.textContent = loadMessage;
 
                 postData(body)

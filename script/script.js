@@ -542,13 +542,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 form.appendChild(statusMessage);
                 statusMessage.textContent = loadMessage;
 
-                // postData(body, () => {
-                //     statusMessage.textContent = successMessage;
-                // }, (error) => {
-                //     statusMessage.textContent = errorMessage;
-                //     console.error(error);
-                // });
-
                 postData(body)
                     .then(statusMessage.textContent = successMessage)
                     .catch((error) => {

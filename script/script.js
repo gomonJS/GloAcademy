@@ -497,26 +497,30 @@ document.addEventListener('DOMContentLoaded', () => {
          * 
          * функция запроса на сервер
          */
-        const postData = (body, outputData, errorData) => {
+        const postData = (body) => {
 
-            const request = new XMLHttpRequest();
+            return new  Promise((resolve, reject) => {
+                const request = new XMLHttpRequest();
 
-            request.addEventListener('readystatechange', () => {
-
-                if (request.readyState !== 4) {
-                    return;
-                }
-
-                if (request.status === 200) {
-                    outputData();
-                } else {
-                    errorData(request.status);
-                }
+                request.addEventListener('readystatechange', () => {
+    
+                    if (request.readyState !== 4) {
+                        return;
+                    }
+    
+                    if (request.status === 200) {
+                        // outputData();
+                        resolve();
+                    } else {
+                        // errorData(request.status);
+                        reject(request.status);
+                    }
+                });
+                
+                request.open('POST', './server.php');
+                request.setRequestHeader('Content-Type', 'application/json');
+                request.send(JSON.stringify(body));
             });
-            
-            request.open('POST', './server.php');
-            request.setRequestHeader('Content-Type', 'application/json');
-            request.send(JSON.stringify(body));
         };
 
         const eventFormData = (form) => {
@@ -538,12 +542,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 form.appendChild(statusMessage);
                 statusMessage.textContent = loadMessage;
 
-                postData(body, () => {
-                    statusMessage.textContent = successMessage;
-                }, (error) => {
-                    statusMessage.textContent = errorMessage;
-                    console.error(error);
-                });
+                // postData(body, () => {
+                //     statusMessage.textContent = successMessage;
+                // }, (error) => {
+                //     statusMessage.textContent = errorMessage;
+                //     console.error(error);
+                // });
+
+                postData(body)
+                    .then(statusMessage.textContent = successMessage)
+                    .catch((error) => {
+                        statusMessage.textContent = errorMessage;
+                        console.error(error);
+                    });
     
                 const timeClearData = setTimeout(() => {
                     statusMessage.remove();

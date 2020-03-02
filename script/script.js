@@ -478,8 +478,7 @@ document.addEventListener('DOMContentLoaded', () => {
      * отправка данных из формы - ajax
      */
     const sendForm = () => {
-
-        const DONE_OPERATION = 4, REQUEST_SERVER = 200;
+        
         const errorMessage = 'Что-то пошло не так',
             loadMessage = 'Загрузка...',
             successMessage = 'Сообщение отправлено, в ближайшее время мы с Вами свяжемся';
@@ -500,27 +499,12 @@ document.addEventListener('DOMContentLoaded', () => {
          */
         const postData = (body) => {
 
-            return new  Promise((resolve, reject) => {
-                const request = new XMLHttpRequest();
-
-                request.addEventListener('readystatechange', () => {
-    
-                    if (request.readyState !== DONE_OPERATION) {
-                        return;
-                    }
-    
-                    if (request.status === REQUEST_SERVER) {
-                        // outputData();
-                        resolve();
-                    } else {
-                        // errorData(request.status);
-                        reject(request.status);
-                    }
-                });
-                
-                request.open('POST', './server.php');
-                request.setRequestHeader('Content-Type', 'application/json');
-                request.send(JSON.stringify(body));
+            return fetch('./server.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
             });
         };
 
@@ -545,7 +529,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 statusMessage.textContent = loadMessage;
 
                 postData(body)
-                    .then(statusMessage.textContent = successMessage)
+                    .then((response) => {
+
+                        if (response.status !== 200) {
+                            throw new Error('Status server not 200');
+                        }
+                        statusMessage.textContent = successMessage;
+                    })
                     .catch((error) => {
                         statusMessage.textContent = errorMessage;
                         console.error(error);

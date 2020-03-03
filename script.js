@@ -20,9 +20,18 @@ const userDate = {
 
         const date = new Date();
 
-        userDate.day = date.getDate();
-        userDate.dayWeek = date.getDay();
-        userDate.month = date.getMonth();
+        this.day = date.getDate();
+        this.dayWeek = date.getDay();
+        this.month = date.getMonth();
+        this.year = date.getFullYear();
+        this.hour = date.getHours();
+        this.minets = date.getHours();
+        this.seconds = date.getSeconds();
+    },
+
+    dateOutPut: function () {
+
+
     }
 };
 
@@ -31,3 +40,9 @@ userDate.checkDate();
 console.log(userDate.day);
 console.log(userDate.dayWeek);
 console.log(userDate.month);
+console.log(userDate.year);
+console.log(userDate.hour);
+console.log(userDate.minets);
+console.log(userDate.seconds);
+
+console.log(Date.now());

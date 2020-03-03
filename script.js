@@ -1,48 +1,66 @@
 'use strict';
 
 
-const outDate = document.getElementById('outDate');
+let decCache = [], decCases = [2, 0, 1, 1, 1, 2];
 
+function decOfNum(number, label) {
 
-// 'Сегодня Вторник, 4 февраля 2020 года, 21 час 5 минут 33 секунды'
-
-const userDate = {
-
-    day: 0,
-    dayWeek: 0,
-    month: 0,
-    year: 0,
-    hour: 0,
-    minets: 0,
-    seconds: 0,
-
-    checkDate: function () {
-
-        const date = new Date();
-
-        this.day = date.getDate();
-        this.dayWeek = date.getDay();
-        this.month = date.getMonth();
-        this.year = date.getFullYear();
-        this.hour = date.getHours();
-        this.minets = date.getHours();
-        this.seconds = date.getSeconds();
-    },
-
-    dateOutPut: function () {
-
-
+    if (!decCache[number]) {
+        decCache[number] = number % 100 > 4 && number % 100 < 20 ? 2 :
+            decCases[Math.min(number % 10, 5)];
     }
-};
+    return label[decCache[number]];
+}
 
-userDate.checkDate();
+function clock() {
 
-console.log(userDate.day);
-console.log(userDate.dayWeek);
-console.log(userDate.month);
-console.log(userDate.year);
-console.log(userDate.hour);
-console.log(userDate.minets);
-console.log(userDate.seconds);
+    let d = new Date();
+    let monthNum = d.getMonth();
+    let day = d.getDate();
+    let dayNum = d.getDay();
+    let hours = d.getHours();
+    let minutes = d.getMinutes();
+    let seconds = d.getSeconds();
 
-console.log(Date.now());
+    const month = new Array(
+        "января", "февраля", "марта", "апреля",
+        "мая", "июня", "июля", "августа",
+        "сентября", "октября", "ноября", "декабря"
+    );
+
+    const dayWeek = new Array(
+        'Воскресение', 'Понедельник', 'Вторник', 'Среда',
+        'Четверг', 'Пятница', 'Суббота'
+    );
+
+    if (seconds <= 9) { seconds = '0' + seconds; }
+
+    let dateTime = `
+    Сегодня ${dayWeek[dayNum]}, ${day} ${month[monthNum]} ${d.getFullYear()} года,
+    ${hours} ${decOfNum(hours, ['час', 'часа', 'часов'])} ${minutes} ${decOfNum(minutes, ['минута', 'минуты', 'минут'])} 
+    ${seconds} ${decOfNum(seconds, ['секунда', 'секунды', 'секунд'])}
+    `;
+// '04.02.2020 - 21:05:33'
+
+    if (day <= 9) { day = '0' + day; }
+    if (monthNum <= 9) { monthNum = '0' + monthNum; }
+    if (hours <= 9) { hours = '0' + hours; }
+    if (minutes <= 9) { minutes = '0' + minutes; }
+    if (seconds <= 9) { seconds = '0' + seconds; }
+
+    let dateTimeSmall = `
+    ${day}.${monthNum}.${d.getFullYear()} - ${hours}:${minutes}:${seconds}
+    `;
+
+    if (dateTime) {
+        document.getElementById("outDateOne").textContent = dateTime;
+    }
+
+    if (dateTimeSmall) {
+        document.getElementById("outDateTwo").textContent = dateTimeSmall;
+    }
+
+    setTimeout(clock, 1000);
+}
+
+clock();

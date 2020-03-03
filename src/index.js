@@ -13,7 +13,6 @@ import clickAnchor from './modules/clickAnchor';
 import tabs from './modules/tabs';
 import slider from './modules/slider';
 import hoverReplaceImage from './modules/hoverRerlaceImage';
-import addTextAltImage from './modules/addTextAltImage';
 import calcInputNumber from './modules/calcInputNumber';
 import sendForm from './modules/sendForm';
 
@@ -30,8 +29,6 @@ tabs(); // переключение табов
 slider(); // слайдер
 
 hoverReplaceImage(); // смена картинки при наведении курсора
-
-addTextAltImage(); // добавление alt
 
 calcInputNumber(100); // расчет стоимости услуги
 

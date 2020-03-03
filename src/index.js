@@ -17,32 +17,22 @@ import addTextAltImage from './modules/addTextAltImage';
 import calcInputNumber from './modules/calcInputNumber';
 import sendForm from './modules/sendForm';
 
-// старт таймера
-countTimer('27 february 2020');
+countTimer('27 february 2020'); // старт таймера
 
-// события меню навигации
-toggleMenu();
+toggleMenu(); // события меню навигации
 
-// модальное окно
-togglePopUp();
+togglePopUp(); // модальное окно
 
-// прокрутка по якорям
-clickAnchor();
+clickAnchor(); // прокрутка по якорям
 
-// переключение табов
-tabs();
+tabs(); // переключение табов
 
-// слайдер
-slider();
+slider(); // слайдер
 
-// смена картинки при наведении курсора
-hoverReplaceImage();
+hoverReplaceImage(); // смена картинки при наведении курсора
 
-// добавление alt
-addTextAltImage();
+addTextAltImage(); // добавление alt
 
-// расчет стоимости услуги
-calcInputNumber(100);
+calcInputNumber(100); // расчет стоимости услуги
 
-// отправка формы
-sendForm();
+sendForm(); // отправка формы

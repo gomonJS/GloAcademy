@@ -3,6 +3,12 @@
 
 let decCache = [], decCases = [2, 0, 1, 1, 1, 2];
 
+/**
+ * 
+ * @param {*} number 
+ * @param {*} label 
+ * шаблон вывода расширения для секунд, минут, часов, 
+ */
 function decOfNum(number, label) {
 
     if (!decCache[number]) {
@@ -23,9 +29,9 @@ function clock() {
     let seconds = d.getSeconds();
 
     const month = new Array(
-        "января", "февраля", "марта", "апреля",
-        "мая", "июня", "июля", "августа",
-        "сентября", "октября", "ноября", "декабря"
+        'Января', 'Февраля', 'Марта', 'Апреля',
+        'Мая', 'Июня', 'Июля', 'Августа',
+        'Сентября', 'Октября', 'Ноября', 'Декабря'
     );
 
     const dayWeek = new Array(
@@ -36,9 +42,10 @@ function clock() {
     if (seconds <= 9) { seconds = '0' + seconds; }
 
     let dateTime = `
-    Сегодня ${dayWeek[dayNum]}, ${day} ${month[monthNum]} ${d.getFullYear()} года,
-    ${hours} ${decOfNum(hours, ['час', 'часа', 'часов'])} ${minutes} ${decOfNum(minutes, ['минута', 'минуты', 'минут'])} 
-    ${seconds} ${decOfNum(seconds, ['секунда', 'секунды', 'секунд'])}
+        Сегодня ${dayWeek[dayNum]}, ${day} ${month[monthNum]} ${d.getFullYear()} года,
+        ${hours} ${decOfNum(hours, ['час', 'часа', 'часов'])} 
+        ${minutes} ${decOfNum(minutes, ['минута', 'минуты', 'минут'])} 
+        ${seconds} ${decOfNum(seconds, ['секунда', 'секунды', 'секунд'])}
     `;
 // '04.02.2020 - 21:05:33'
 
@@ -46,10 +53,9 @@ function clock() {
     if (monthNum <= 9) { monthNum = '0' + monthNum; }
     if (hours <= 9) { hours = '0' + hours; }
     if (minutes <= 9) { minutes = '0' + minutes; }
-    if (seconds <= 9) { seconds = '0' + seconds; }
 
     let dateTimeSmall = `
-    ${day}.${monthNum}.${d.getFullYear()} - ${hours}:${minutes}:${seconds}
+        ${day}.${monthNum}.${d.getFullYear()} - ${hours}:${minutes}:${seconds}
     `;
 
     if (dateTime) {

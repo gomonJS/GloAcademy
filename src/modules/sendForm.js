@@ -16,6 +16,11 @@ const sendForm = () => {
     const statusMessage = document.createElement('div');
     statusMessage.style.cssText = 'font-size: 22px';
 
+    forms.forEach((element) => {
+        console.log(element);
+    });
+
+
     /**
      * 
      * @param {*} body 
@@ -104,6 +109,7 @@ const sendForm = () => {
                 if (elem.type === 'tel') {
                     !(/^\+?[78]([-()]*\d){10}$/).test(elem.value) ?
                         error.add(elem) : error.delete(elem);
+                    elem.placeholder = '+7(999)-999-99-99';
                 }
 
                 if (elem.type === 'message') {

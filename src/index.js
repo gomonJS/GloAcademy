@@ -1,5 +1,3 @@
-'use strict';
-
 import "@babel/polyfill";
 import 'nodelist-foreach-polyfill';
 import elementClosest from 'element-closest';
@@ -16,20 +14,25 @@ import hoverReplaceImage from './modules/hoverRerlaceImage';
 import calcInputNumber from './modules/calcInputNumber';
 import sendForm from './modules/sendForm';
 
-countTimer('27 february 2020'); // старт таймера
+document.addEventListener('DOMContentLoaded', () => {
 
-toggleMenu(); // события меню навигации
-
-togglePopUp(); // модальное окно
-
-clickAnchor(); // прокрутка по якорям
-
-tabs(); // переключение табов
-
-slider(); // слайдер
-
-hoverReplaceImage(); // смена картинки при наведении курсора
-
-calcInputNumber(100); // расчет стоимости услуги
-
-sendForm(); // отправка формы
+    'use strict';
+    
+    countTimer('5 march 2020'); // старт таймера
+    
+    toggleMenu(); // события меню навигации
+    
+    togglePopUp(); // модальное окно
+    
+    clickAnchor(); // прокрутка по якорям
+    
+    tabs(); // переключение табов
+    
+    slider(); // слайдер
+    
+    hoverReplaceImage(); // смена картинки при наведении курсора
+    
+    calcInputNumber(100); // расчет стоимости услуги
+    
+    sendForm(); // отправка формы
+});

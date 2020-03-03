@@ -26,6 +26,7 @@ const slider = () => {
 
     // созданные li
     const dot = document.querySelectorAll('.dot');
+    dot[0].classList.add('dot-active');
 
     const prevSlide = (elem, index, strClas) => {
         elem[index].classList.remove(strClas);

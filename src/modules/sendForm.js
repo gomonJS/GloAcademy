@@ -16,10 +16,6 @@ const sendForm = () => {
     const statusMessage = document.createElement('div');
     statusMessage.style.cssText = 'font-size: 22px';
 
-    forms.forEach((element) => {
-        console.log(element);
-    });
-
 
     /**
      * 

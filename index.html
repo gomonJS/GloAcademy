@@ -221,7 +221,9 @@
 	<div class="container">
 		<h2>Нам доверяют</h2>
 		<div class="underline"></div>
+
 		<div class="companies-wrapper">
+
 			<div class="companies-hor">
 				<div class="companies-hor-item"><img src="images/companies/companies-1.png" alt=""></div>
 				<div class="companies-hor-item"><img src="images/companies/companies-2.png" alt=""></div>
@@ -231,7 +233,9 @@
 				<div class="companies-hor-item"><img src="images/companies/companies-6.png" alt=""></div>
 				<div class="companies-hor-item"><img src="images/companies/companies-7.png" alt=""></div>
 			</div>
+			
 		</div>
+
 	</div>
 </div>
 
@@ -436,50 +440,6 @@
 	})
 
 	valid1.init();
-
-	const valid2 = new Validator({
-		selector: '#form2',
-		method: {
-			'form2-phone': [
-				['notEmpty'],
-				['pattern', 'phone']
-			],
-			'form2-email': [
-				['notEmpty'],
-				['pattern', 'email']
-			],
-			'form2-name': [
-				['notEmpty'],
-				['pattern', 'name']
-			],
-			'form2-message': [
-				['notEmpty'],
-				['pattern', 'message']
-			]
-		}
-	})
-
-	valid2.init();
-
-	const valid3 = new Validator({
-		selector: '#form3',
-		method: {
-			'form3-phone': [
-				['notEmpty'],
-				['pattern', 'phone']
-			],
-			'form3-email': [
-				['notEmpty'],
-				['pattern', 'email']
-			],
-			'form3-name': [
-				['notEmpty'],
-				['pattern', 'name']
-			]
-		}
-	})
-
-	valid3.init();
 </script> -->
 
 </body>

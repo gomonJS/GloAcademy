@@ -54,7 +54,7 @@ const btnStart = document.getElementById('start'),
 
 class AppData {
 
-    constructor () {
+    constructor() {
 
         this.budget = 0; // общий доход без вычетов
         this.budgetDay = 0; // беджет на 1 день с вычетом обязятельных расходов
@@ -72,10 +72,10 @@ class AppData {
     }
 
     // старт программы
-    start () {
+    start() {
 
         this.budget = +salaryAmount.value;
-    
+
         this.getExpInc(); // получение данных из полей - Обязательные расходы & Дополнительный доход
         this.getAddIncome(); // Возможный доход
         this.getTargetAmount(); // Цель сумма
@@ -90,14 +90,14 @@ class AppData {
     }
 
     // расчет буджета на 1 день и 1 месяц
-    getBudget () {
+    getBudget() {
 
         this.budgetMonth = this.budget + this.incomeMonth - this.expensesMonth;
         this.budgetDay = Math.ceil(this.budgetMonth / 30);
     }
 
     // получение данных из полей - Обязательные расходы & Дополнительный доход
-    getExpInc () {
+    getExpInc() {
 
         const count = (item) => {
 
@@ -115,9 +115,9 @@ class AppData {
     }
 
     // Возможный доход
-    getAddIncome () {
+    getAddIncome() {
 
-        additionalIncomeItem.forEach( (item) => {
+        additionalIncomeItem.forEach((item) => {
 
             const itemValue = item.value.trim();
 
@@ -128,7 +128,7 @@ class AppData {
     }
 
     // доходы за месяц
-    addIncomeMonth () {
+    addIncomeMonth() {
 
         for (let key in this.income) {
             this.incomeMonth += +this.income[key];
@@ -136,11 +136,11 @@ class AppData {
     }
 
     // Возможные расходы (перечислите через запятую)
-    getAddExpenses () {
+    getAddExpenses() {
 
         const addExpenses = additionalExpensesItem.value.split(',');
 
-        addExpenses.forEach( (item) => {
+        addExpenses.forEach((item) => {
 
             item = item.trim();
 
@@ -151,7 +151,7 @@ class AppData {
     }
 
     // Цель сумма
-    getTargetAmount () {
+    getTargetAmount() {
 
         const target = targetAmount.value.trim();
 
@@ -161,7 +161,7 @@ class AppData {
     }
 
     // Период расчета
-    getPeriod () {
+    getPeriod() {
 
         periodSelect.addEventListener('input', () => {
             periodAmount.textContent = periodSelect.value;
@@ -169,7 +169,7 @@ class AppData {
     }
 
     // Сумма расходов за месяц
-    getExpensesMonth () {
+    getExpensesMonth() {
 
         let sum = 0;
 
@@ -181,7 +181,7 @@ class AppData {
     }
 
     // Дабавление полей дополнительный доход
-    addIncomeBlock () {
+    addIncomeBlock() {
 
         const cloneItemIncom = incomeItems[0].cloneNode(true);
         incomeItems[0].parentNode.insertBefore(cloneItemIncom, btnPlusIncomeAdd);
@@ -193,7 +193,7 @@ class AppData {
     }
 
     // Добавление полей дополнительный расход
-    addExpensesBlock () {
+    addExpensesBlock() {
 
         const cloneexpensesItems = expensesItems[0].cloneNode(true);
         expensesItems[0].parentNode.insertBefore(cloneexpensesItems, btnPlusExpensesAdd);
@@ -205,7 +205,7 @@ class AppData {
     }
 
     // Вывод данных по значениею range
-    setIncomePeriodValue () {
+    setIncomePeriodValue() {
 
         let selectRange = this.calcSavedMoney();
 
@@ -216,7 +216,7 @@ class AppData {
     }
 
     // Вывод результата
-    showResult () {
+    showResult() {
 
         budgetMonthValue.value = this.budgetMonth;
         budgetDayValue.value = this.budgetDay;
@@ -229,32 +229,32 @@ class AppData {
         this.setIncomePeriodValue();
     }
 
-    calcSavedMoney () {
+    calcSavedMoney() {
 
         return (this.budget + this.incomeMonth - this.expensesMonth) * +periodSelect.value;
     }
 
     // Блокировка кнопки Рассчитать если Месячный доход не запонен =>> ()
-    blockButtonStart () {
+    blockButtonStart() {
 
         salaryAmount.addEventListener('input', () => {
             btnStart.removeAttribute('disabled');
             periodSelect.removeAttribute('disabled');
         });
-    
+
         btnStart.disabled = !salaryAmount.value.trim();
         periodSelect.setAttribute('disabled', true);
     }
 
     // Кнопка Сброса
-    btnResetVisible () {
+    btnResetVisible() {
 
         btnStart.style.display = 'none';
         btnCancel.style.display = 'block';
     }
 
     // Сброс данных
-    resetData () {
+    resetData() {
 
         btnCancel.style.display = 'none';
         btnStart.style.display = 'block';
@@ -278,7 +278,7 @@ class AppData {
         const calcBlock = calc.querySelectorAll('input');
 
         const dataBlock = data.querySelectorAll('input[type=text]');
-        
+
         dataBlock.forEach(function (item) {
             item.removeAttribute('disabled');
         });
@@ -308,10 +308,10 @@ class AppData {
         this.setIncomePeriodValue();
     }
 
-    blockedInputData () {
+    blockedInputData() {
 
         const dataBlock = data.querySelectorAll('input[type=text]');
-    
+
         dataBlock.forEach(function (item) {
             item.setAttribute('disabled', true);
         });
@@ -320,7 +320,7 @@ class AppData {
         btnPlusExpensesAdd.setAttribute('disabled', true);
     }
 
-    eventListener () {
+    eventListener() {
 
         this.getPeriod();
         this.blockButtonStart();

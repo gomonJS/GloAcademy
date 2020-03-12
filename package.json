@@ -1,0 +1,34 @@
+{
+  "name": "gloacademy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/main.js",
+  "dependencies": {
+    "babel-loader": "^8.0.6",
+    "element-closest": "^3.0.2",
+    "nodelist-foreach-polyfill": "^1.2.0",
+    "webpack": "^4.42.0",
+    "webpack-dev-server": "^3.10.3",
+    "webpack-cli": "^3.3.11"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.7",
+    "@babel/preset-env": "^7.8.7",
+    "path": "^0.12.7"
+  },
+  "scripts": {
+    "dev": "webpack-dev-server --open --mode=development",
+    "build": "webpack --mode=production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gomonJS/GloAcademy.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gomonJS/GloAcademy/issues"
+  },
+  "homepage": "https://github.com/gomonJS/GloAcademy#readme"
+}
